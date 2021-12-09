@@ -1,1 +1,149 @@
-{"shopify":{"checkout":{"thank_you":{"thank_you_description":"Abbiamo accettato il tuo ordine e ce ne stiamo occupando. Puoi utilizzare questa pagina per controllare lo stato della consegna. Riceverai comunque un'email non appena l'ordine sarà spedito."}}},"general":{"general":{"account":"Account","email":"Email","email_placeholder":"tuo@email.com","login":"Accedi","message":"Messaggio","my_account":"Il Mio Account","name":"Nome","name_placeholder":"nome","password":"Password","price":"Prezzo","product":"Prodotto","quantity":"Quantità","remove":"Rimuovi","subtotal":"Subtotale","total":"Totale","subscribe":"Iscriviti","available":"Disponibile","days":"Giorni","hours":"Ore","minutes":"Minuti","seconds":"Secondi","left":"sinistra","last_day":"Ultimo giorno","no_image":"Nessun Immagine","copyright_text_html":"&copy; 2014 - {{ year }}.","app_store":"https:\/\/itunes.apple.com\/it\/app\/filo-find-locate-what-you-care-about\/id950467121?mt=8","play_store":"https:\/\/play.google.com\/store\/apps\/details?id=com.filotrack.filo&hl=it&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"},"corporate_contact":{"name_placeholder":"Nome","company_placeholder":"Azienda","email_placeholder":"Email","phone_placeholder":"Telefono","pieces_placeholder":"Numero di Pezzi"},"social":{"connect_us":"Collegati con noi","social":"Social","facebook":"Condividi","twitter":"Tweet","google":"Aggiungi","instagram":"instagram","share":"Condividi","like":"Like","tweet":"Tweet","pin_it":"","email":"Email"}},"cart":{"general":{"header":"Il Tuo Carrello","currency_note_html":"Nota: tutti gli ordini saranno processati in <strong>{{{ currency }}<\/strong> al tasso di cambio più attuale.","empty":"Non ci sono ancora articoli nel carrello.","continue":"Continua a fare shopping.","instructions_title":"note d'ordine","instructions_placeholder":"aggiungi una nota","not_available":"non disponibile","okay":"ok","stock_level":"Mi dispiace, abbiamo solo {{{ stock_count }} in stock.","tax_and_shipping":"Escluse tasse e spese di spedizione","update_button":"Aggiorna","submit":"Vai alla cassa"},"shipping_calculator":{"header":"Calcolatrice per le spedizioni","country":"Seleziona il paese","province":"Seleziona la regione","error":"Errore: codice postale {{ errore_messaggio }}}","submit":"Calcola","working":"Calcolando...","rates_html":"Ci sono {{ number_of_rates }} tariffe di spedizione disponibili per {{ address }}, a partire da {{ rate }}.","rate":"C'è una tariffa di spedizione disponibile per {{ address }}.","no_rates":"Non spediamo a questa destinazione.","rate_values_html":"{{ rate_title }} a {{ rate }}"}},"collections":{"collection":{"clear":"Pulisci il filtro","no_products":"Questa collezione è vuota.","browse":"Naviga per tag","all_products":"Tutti i prodotti","product_count":{"one":"{{{ conte }} articolo","other":"{{{ conte }} articoli"}}},"contact":{"header":"Contattateci","success":"Il tuo messaggio è stato inviato con successo, ci sentirai presto!","error":"Sembra che qualcosa sia andato storto. Correggi i campi evidenziati qui sotto:","map":{"address_error":"Errore nella ricerca di questo indirizzo","address_no_results":"Nessun risultato per questo indirizzo","address_query_limit_html":"Hai superato il limite di utilizzo delle API di Google. Considerare l'aggiornamento a <a href=\"https:\/\/developers.google.com\/maps\/premium\/usage-limits\">Premium Plan<\/a>.","auth_error_html":"C'è stato un problema di autenticazione del tuo account Google Maps. Crea e abilita i permessi <a href=\"https:\/\/developers.google.com\/maps\/documentation\/javascript\/get-api-key\">JavaScript API<\/a> e <a href=\"https:\/\/developers.google.com\/maps\/documentation\/geocoding\/get-api-key\">Geocoding API<\/a> della tua app."}},"customer":{"general":{"password_confirmation":"Ripeti la password","back_to_account":"Torna al tuo account\n","or":"o"}},"products":{"product":{"add_to_cart":"Aggiungi al carrello","added_to_cart":"Aggiunto al carrello","buy_now":"Compra ora","from":"da","set_quantity":"Inserire un valore per la quantità.\n","on_sale":"In saldo","sale":"saldo","processing":"Elaborazione...","sold_out":"Esaurito","stock_level":"{{ stock_count }} rimasto","cart_link":"carrello","continue_link":"continua a fare shopping","checkout_link":"fai il check-out","success_html":"** product ** è stato aggiunto con successo al tuo {{ carrello_link }}}. Sentitevi liberi di {{ continue_link }}} o {{ checkout_link }}.","unavailable":"Non disponibile","no_image_available":"Nessuna immagine disponibile","no_product":"Non c'è nessun prodotto disponibile in questa collezione.","saving":"salvando","goal_money_html":"<span class='money bold'>{{{{ total_sold }}}<\/span> di <span class='money bold'>{{{ target }}<\/span> Finanziato \/ <span class='product-goal-info-remaining'><strong class='product-goal-info-days'>0<\/strong> giorni rimanenti<\/span>","description":"descrizione","shipping_and_return":"spedizione e resi","returns":"Restituzioni","full_spec":"specifiche complete","variant":"Seleziona una variante"},"related_products":{"header":"Prodotti correlati"}}}
+{
+    "shopify": {
+        "checkout": {
+            "thank_you": {
+                "thank_you_description": "Abbiamo accettato il tuo ordine e ce ne stiamo occupando. Puoi utilizzare questa pagina per controllare lo stato della consegna. Riceverai comunque un'email non appena l'ordine sarà spedito."
+            }
+        }
+    },
+    "general": {
+        "general": {
+            "account": "Account",
+            "email": "Email",
+            "email_placeholder": "tuo@email.com",
+            "login": "Accedi",
+            "message": "Messaggio",
+            "my_account": "Il Mio Account",
+            "name": "Nome",
+            "name_placeholder": "nome",
+            "password": "Password",
+            "price": "Prezzo",
+            "product": "Prodotto",
+            "quantity": "Quantità",
+            "remove": "Rimuovi",
+            "subtotal": "Subtotale",
+            "total": "Totale",
+            "subscribe": "Iscriviti",
+            "available": "Disponibile",
+            "days": "Giorni",
+            "hours": "Ore",
+            "minutes": "Minuti",
+            "seconds": "Secondi",
+            "left": "sinistra",
+            "last_day": "Ultimo giorno",
+            "no_image": "Nessun Immagine",
+            "copyright_text_html": "&copy; 2014 - {{ year }}.",
+            "app_store": "https:\/\/itunes.apple.com\/it\/app\/filo-find-locate-what-you-care-about\/id950467121?mt=8",
+            "play_store": "https:\/\/play.google.com\/store\/apps\/details?id=com.filotrack.filo&hl=it&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
+        },
+        "corporate_contact": {
+            "name_placeholder": "Nome",
+            "company_placeholder": "Azienda",
+            "email_placeholder": "Email",
+            "phone_placeholder": "Telefono",
+            "pieces_placeholder": "Numero di Pezzi"
+        },
+        "social": {
+            "connect_us": "Collegati con noi",
+            "social": "Social",
+            "facebook": "Condividi",
+            "twitter": "Tweet",
+            "google": "Aggiungi",
+            "instagram": "instagram",
+            "share": "Condividi",
+            "like": "Like",
+            "tweet": "Tweet",
+            "pin_it": "",
+            "email": "Email"
+        }
+    },
+    "cart": {
+        "general": {
+            "header": "Il Tuo Carrello",
+            "currency_note_html": "Nota: tutti gli ordini saranno processati in <strong>{{{ currency }}<\/strong> al tasso di cambio più attuale.",
+            "empty": "Non ci sono ancora articoli nel carrello.",
+            "continue": "Continua a fare shopping.",
+            "instructions_title": "note d'ordine",
+            "instructions_placeholder": "aggiungi una nota",
+            "not_available": "non disponibile",
+            "okay": "ok",
+            "stock_level": "Mi dispiace, abbiamo solo {{{ stock_count }} in stock.",
+            "tax_and_shipping": "Escluse tasse e spese di spedizione",
+            "update_button": "Aggiorna",
+            "submit": "Vai alla cassa"
+        },
+        "shipping_calculator": {
+            "header": "Calcolatrice per le spedizioni",
+            "country": "Seleziona il paese",
+            "province": "Seleziona la regione",
+            "error": "Errore: codice postale {{ errore_messaggio }}}",
+            "submit": "Calcola",
+            "working": "Calcolando...",
+            "rates_html": "Ci sono {{ number_of_rates }} tariffe di spedizione disponibili per {{ address }}, a partire da {{ rate }}.",
+            "rate": "C'è una tariffa di spedizione disponibile per {{ address }}.",
+            "no_rates": "Non spediamo a questa destinazione.",
+            "rate_values_html": "{{ rate_title }} a {{ rate }}"
+        }
+    },
+    "collections": {
+        "collection": {
+            "clear": "Pulisci il filtro",
+            "no_products": "Questa collezione è vuota.",
+            "browse": "Naviga per tag",
+            "all_products": "Tutti i prodotti",
+            "product_count": {
+                "one": "{{{ conte }} articolo",
+                "other": "{{{ conte }} articoli"
+            }
+        }
+    },
+    "contact": {
+        "header": "Contattateci",
+        "success": "Il tuo messaggio è stato inviato con successo, ci sentirai presto!",
+        "error": "Sembra che qualcosa sia andato storto. Correggi i campi evidenziati qui sotto:",
+        "map": {
+            "address_error": "Errore nella ricerca di questo indirizzo",
+            "address_no_results": "Nessun risultato per questo indirizzo",
+            "address_query_limit_html": "Hai superato il limite di utilizzo delle API di Google. Considerare l'aggiornamento a <a href=\"https:\/\/developers.google.com\/maps\/premium\/usage-limits\">Premium Plan<\/a>.",
+            "auth_error_html": "C'è stato un problema di autenticazione del tuo account Google Maps. Crea e abilita i permessi <a href=\"https:\/\/developers.google.com\/maps\/documentation\/javascript\/get-api-key\">JavaScript API<\/a> e <a href=\"https:\/\/developers.google.com\/maps\/documentation\/geocoding\/get-api-key\">Geocoding API<\/a> della tua app."
+        }
+    },
+    "customer": {
+        "general": {
+            "password_confirmation": "Ripeti la password",
+            "back_to_account": "Torna al tuo account\n",
+            "or": "o"
+        }
+    },
+    "products": {
+        "product": {
+            "add_to_cart": "Aggiungi al carrello",
+            "added_to_cart": "Aggiunto al carrello",
+            "buy_now": "Compra ora",
+            "from": "da",
+            "set_quantity": "Inserire un valore per la quantità.\n",
+            "on_sale": "In saldo",
+            "sale": "saldo",
+            "processing": "Elaborazione...",
+            "sold_out": "Esaurito",
+            "stock_level": "{{ stock_count }} rimasto",
+            "cart_link": "carrello",
+            "continue_link": "continua a fare shopping",
+            "checkout_link": "fai il check-out",
+            "success_html": "** product ** è stato aggiunto con successo al tuo {{ carrello_link }}}. Sentitevi liberi di {{ continue_link }}} o {{ checkout_link }}.",
+            "unavailable": "Non disponibile",
+            "no_image_available": "Nessuna immagine disponibile",
+            "no_product": "Non c'è nessun prodotto disponibile in questa collezione.",
+            "saving": "salvando",
+            "goal_money_html": "<span class='money bold'>{{{{ total_sold }}}<\/span> di <span class='money bold'>{{{ target }}<\/span> Finanziato \/ <span class='product-goal-info-remaining'><strong class='product-goal-info-days'>0<\/strong> giorni rimanenti<\/span>",
+            "description": "descrizione",
+            "shipping_and_return": "spedizione e resi",
+            "returns": "Restituzioni",
+            "full_spec": "specifiche complete",
+            "variant": "Seleziona una variante"
+        },
+        "related_products": {
+            "header": "Prodotti correlati"
+        }
+    }
+}
