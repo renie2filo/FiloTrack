@@ -1,0 +1,41 @@
+<div class="fc-product-filotag-page-wrapper ">
+  {% section 'template-product-filotag-gift' %}
+
+  {% if product.handle == settings.featured-product-main %}
+    {% assign used_product_focus = false %}
+    {% assign used_technical_specifications = false %}
+    {% assign module_1 = settings.product_module_1 %}
+    {% assign module_2 = settings.product_module_2 %}
+
+    {% if module_1 != 'none' %}
+      {% if module_1 == 'module-technical-specifications' %}
+        {% section 'module-technical-specifications' %}
+        {% assign used_technical_specifications = true %}
+      {% endif %}
+    {% endif %}
+
+    {% if module_2 != 'none' %}
+      {% if module_2 == 'module-product-focus' and used_product_focus == false %}
+        {% section 'module-product-focus' %}
+      {% endif %}
+    {% endif %}
+  {% endif %}
+
+  {% section 'filotag-amazon--gift-card--fb-slideshow'%}
+
+  {% section 'products-alternating-content-hiw'%}
+</div>
+
+{% comment %}
+<div class="fc-product-filotag-page-wrapper ">
+
+  {% section 'template-product-filotag-amazon' %}
+
+  {% section 'filotag-amazon--gift-card--fb-slideshow'%}
+  
+  {% section 'products-alternating-content-spec'%}
+
+  {% section 'products-alternating-content-hiw'%}
+
+</div>
+{% endcomment %}

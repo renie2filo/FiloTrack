@@ -1,0 +1,336 @@
+<div class="footer-wrapper style-{{ section.settings.style }} {% if section.settings.enable_borders %}has-borders{% endif %}">
+  <footer class="main-footer">
+    
+    <!-- ROW PER INSERIMENTO LOGO E NEWS -->
+
+    <div class="fc-footer-row-social clearfix">
+      
+    <div class="drawer-social-icons fc-social-footer">
+     <span class="fc-connect-with-social"> Follow us </span>
+      <!--  <span class="fc-connect-with-social"> Follow us </span> -->
+        {% assign social_media_accounts = "facebook|twitter|google|pinterest|instagram|vimeo|youtube|rss" | split: "|" %}
+        {% for account in social_media_accounts %}
+          {% capture url %}social_{{ account }}_url{% endcapture %}
+          {% if settings[url] != blank %}
+            <a
+              class="drawer-social-icon-{{ account }}"
+              href="{{ settings[url] | escape }}"
+              target="_blank">
+              {{ account | capitalize }}
+            </a>
+          {% endif %}
+        {% endfor %}
+      
+      </div>
+      
+      {% comment %}
+      <!-- NEWSLETTER -->
+
+      <div class="fc-social-newsletter fc-hide-i">
+       
+        <!-- <div class="fc-description-container">
+    		  <span class="fc-newsletter-description"> {{'general.mailing_list.description_now' | t }} </span>
+        </div> -->
+        
+        {% form 'customer', id: 'newsletter-form-footer' %}
+              {% if form.posted_successfully? %}
+                <p class="module-subtitle fc-module-subtitle">
+                  {{ 'general.mailing_list.success' | t }}
+                </p>
+              {% else %}
+        
+            		<div class="fc-description-container">
+        		  		<span class="fc-newsletter-description"> {{'general.mailing_list.description_now' | t }} </span>
+          			</div>
+       
+                <input type="hidden" id="contact_tags" name="contact[tags]" value="prospect, newsletter">
+
+                <div class="mailing-list-signup-form-field fc-news-field">
+                  <input
+                    class="mailing-list-signup-form-email icon-arrow-right"
+                    name="contact[email]"
+                    type="email"
+                    placeholder="{{ 'general.general.email_placeholder' | t }}"
+                    aria-label="{{ 'general.general.email_placeholder' | t }}">
+                  <div class="mailing-list-signup-form-field-icon icon icon-mail"></div>
+                </div>
+
+                <div class="mailing-list-signup-form-cta fc-align-news-row ">
+                  <input
+                    class="mailing-list-signup-form-submit"
+                    name="subscribe"
+                    type="submit"
+                    value="{{ 'general.general.subscribe' | t }}"
+                    aria-label="{{ 'general.general.subscribe' | t }}" />
+                  <div class="mailing-list-signup-form-submit-icon icon icon-arrow-right"></div>
+                </div>
+              {% endif %}
+      {% endform %}
+      </div>
+      
+      {% endcomment %}  
+     
+    </div>
+    
+    {% if section.blocks.size or section.settings.show_logo %}
+      <div class="footer-row footer-columns clearfix">
+        {% if section.settings.show_logo %}
+          <div class="footer-column footer-logo">
+            <a class="footer-logo-link" href="/">
+              {% if section.settings.footer_logo_alternate and section.settings.style == 'dark' %}
+                <img
+                  class="footer-logo-image footer-logo-regular"
+                  alt="{{ shop.name | escape }}"
+                  src="{{ 'filo_w.svg' | asset_url }}">
+              {% elsif section.settings.footer_logo %}
+                <img
+                  class="footer-logo-image footer-logo-alternate"
+                  alt="{{ shop.name | escape }}"
+                  src="{{ 'filo_r.svg' | asset_url }}">
+              {% else %}
+                <h2 class="branding-logo">{{ shop.name }}</h2>
+              {% endif %}
+            </a>
+          </div>
+        {% endif %}
+
+        {% for block in section.blocks %}
+          {% if block.type == 'menu' %}
+            {% assign menu = block.settings.menu %}
+            {% if linklists[menu].links != blank %}
+              <div class="footer-column footer-menu">
+                <h4 class="footer-title footer-menu-title">{{ linklists[menu].title }}</h4>
+                <ul class="footer-menu-list">
+                  {% for link in linklists[menu].links %}
+                    <li class="footer-menu-list-item">
+                      <a class="footer-menu-list-item-anchor" href="{{ link.url }}">{{ link.title }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+          {% endif %}
+
+          {% if block.type == 'social_media' %}
+            {% assign social_media = 'Facebook|Twitter|Google+|Pinterest|Instagram|Vimeo|YouTube|RSS'  %}
+            {% assign social_media_accounts = social_media | downcase | replace: '+', '' | split: '|' %}
+            {% assign social_media_titles = social_media | split: '|' %}
+            {% assign has_links = false %}
+
+            {% for account in social_media_accounts %}
+              {% assign setting = 'social_' | append: account | append: '_url' %}
+              {% if settings[setting] != blank %}
+                {% assign has_links = true %}
+                {% break %}
+              {% endif %}
+            {% endfor %}
+
+            {% if has_links %}
+              <div class="footer-column footer-menu">
+                <h4 class="footer-title footer-menu-title">{{ "general.social.social" | t }}</h4>
+                <ul class="footer-menu-list">
+                  {%- for account in social_media_accounts -%}
+                    {% assign setting = 'social_' | append: account | append: '_url' %}
+                    {% assign title = social_media_titles[forloop.index] %}
+
+                    {%- if settings[setting] != blank -%}
+                      <li class="footer-menu-list-item">
+                        <a
+                          class="footer-menu-list-item-anchor"
+                          href="{{ settings[setting] | escape }}"
+                          target="_blank"
+                          title="{{ title }}"
+                        >
+                          {{ title }}
+                        </a>
+                      </li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+              </div>
+            {% endif %}
+          {% endif %}
+
+          {% if block.type == 'richtext' %}
+            <div class="footer-column footer-content">
+              {% if block.settings.title != blank %}
+                <h4 class="footer-title footer-content-title">
+                  {{ block.settings.title | escape }}
+                </h4>
+              {% endif %}
+              {% if block.settings.text != blank %}
+                <div class="footer-content-text">
+                  {{ block.settings.text }}
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div role="contentinfo" class="footer-row footer-information">
+      <p class="footer-copyright">
+        
+        <a href="//www.iubenda.com/privacy-policy/959228" class="iubenda-nostyle no-brand iub-legal-only iubenda-embed" title="Privacy Policy">Privacy Policy</a><script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "//cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script> - 
+        
+        
+        {% capture year %}{{ "now" | date: "%Y" }}{% endcapture %}
+        {% comment %}{{ 'general.general.copyright_text_html' | t: year: year }} {{ 'general.general.copyright_credit_html_new' | t }} 
+        {% endcomment %}
+        
+		© 2014 - 2020 Filo Srl - All rights reserved Filo Srl - Viale dei Santi Pietro e Paolo, 24, 00144, Rome (RM) - Italy P.IVA/CF:13008741004 - REA: RM - 1417094 - S.C. € 18.178,83
+        
+        {%comment%}
+        {{ powered_by_link }}.
+        {%endcomment%}
+      </p>
+
+      {% if shop.enabled_payment_types.size > 0 and section.settings.payment_icons %}
+        <ul class="payment-icons">
+          {% comment %}
+            - Use the following code to test all payment types, based on the supplied list
+            from Shopify (https://help.shopify.com/themes/customization/store/add-credit-card-icons)
+          {% endcomment %}
+          {% assign payment_types_all = 'amazon_payments|american_express|apple_pay|bitcoin|dankort|diners_club|discover|dogecoin|dwolla|forbrugsforeningen|jcb|litecoin|maestro|master|paypal|visa|cirrus|interac|stripe|shopify_pay' %}
+          {% for type in shop.enabled_payment_types %}
+            {% if payment_types_all contains type %}
+              <li class="payment-icon-{{ type | replace: '_','-' }}"></li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      {% endif %}
+      
+      
+      <!-- FOOTER NUOVO -->
+      
+      <p class="fc-footer-copyright-img">
+        <a href="https://itunes.apple.com/app/filo-find-locate-what-you-care-about/id950467121?mt=8"><img alt="Download on the App Store" src="https://cdn.shopify.com/s/files/1/2199/1049/files/Download_on_the_App_Store_Badge_US-UK_135x40_c4035894-3d5b-46b1-90cb-8afa0da1bc3b.png?13238041794208748750" height="40px" /></a>
+       	<a href='https://play.google.com/store/apps/details?id=com.filotrack.filo&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' height="40px" src='https://cdn.shopify.com/s/files/1/2199/1049/files/google-play-badge_copia.png?11981669332207743665'/></a>
+      </p>
+     <!-- <p class="fc-footer-copyright-min"> 
+        Google Play and the Google Play logo are trademarks of Google Inc. App Store and Apple are registered trademarks of Apple Inc.
+      </p>-->
+	
+    </div>
+  </footer>
+</div>
+
+{% schema %}
+{
+  "name": "Footer",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Background style",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
+        }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_borders",
+      "label": "Show borders",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_icons",
+      "label": "Enable payment icons",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_logo",
+      "label": "Show logo in footer",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "footer_logo",
+      "label": "Logo image",
+      "info": "400 x 200px .png recommended"
+    },
+    {
+      "type": "image_picker",
+      "id": "footer_logo_alternate",
+      "label": "Inverted logo image",
+      "info": "400 x 200px .png recommended"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Menu",
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu",
+          "default": "main-menu"
+        }
+      ]
+    },
+    {
+      "type": "social_media",
+      "name": "Social media links",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Configure your social media links under \"General settings\" in \"Social media\""
+        }
+      ],
+      "limit": 1
+    },
+    {
+      "type": "richtext",
+      "name": "Rich text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Rich text"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Use this section to welcome customers to your store, say a bit about your brand, or share news and seasonal promotions.</p>"
+        }
+      ],
+      "limit": 1
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "menu",
+        "settings": {
+          "menu": "main-menu"
+        }
+      },
+      {
+        "type": "menu",
+        "settings": {
+          "menu": "footer"
+        }
+      }
+    ]
+  }
+}
+{% endschema %}

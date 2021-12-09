@@ -1,0 +1,57 @@
+{% comment %}
+<div class="module-wrapper">
+  <div class="module module-default-page">
+    <div class="module-header page-header">
+      <div class="module-title page-title">
+        <h1>{{ page.title }}</h1>
+      </div>
+    </div>
+    {% unless page.content == blank %}
+      <div class="module-body page-body rte">
+        {{ page.content }}
+      </div>
+    {% endunless %}
+  </div>
+</div>
+{% endcomment %}
+
+<div class="fc-product-filotag-page-wrapper fc-trigger-product-view module-wrapper fc-phone-finder fc-use-case fc-js-trigger">
+
+  {% assign collection = collections['all'] %}
+  {% for product_loop in collection.products %}
+    {% assign product = product_loop %}
+  {% endfor %}
+
+  {% if page.url == '/pages/keyfinder' or page.url == '/pages/key-finder-new' %}
+    {% section 'uc-key-finder-alt-content'%}
+  {% endif %}
+  {% if page.url == '/pages/luggage-finder' %}
+    {% section 'uc-luggage-finder-alt-content'%}
+  {% endif %}
+  {% if page.url == '/pages/wallet-finder' %}
+    {% section 'uc-wallet-finder-alt-content'%}
+  {% endif %}
+
+  {% section 'uc-phone-finder-alt-content'%}
+  {% section 'use-cases-hiw-text-with-icons' %}
+
+  {% section 'uc-find-fast-alt-content' %}
+
+  <div class="fc-hide-sm-db">
+    {% section 'uc-cta-alt-content' %}
+    <div class="fc-product-filotag-page-wrapper ">
+      {% section 'template-product-filotag' %}
+    </div>
+  </div>
+  
+  {% section 'use-cases-plus-text-with-icons' %}
+
+
+  <div class="fc-show-sm-db fc-pv-80 fc-ph-24 fc-bg-white fc-ta-c">
+    <h3 class="fc-fs-24">Quickly find everything<br/>that matters with Filo</h3>
+    <a class="button fc-red fc-mt-24" href="/products/filo-tag">
+      buy filo now
+    </a>
+  </div>
+
+</div>

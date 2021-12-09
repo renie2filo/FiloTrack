@@ -1,0 +1,118 @@
+<link rel="preconnect" href="//cdn.shopify.com">
+<link rel="preconnect" href="//code.ionicframework.com">
+<link rel="preconnect" href="//fonts.googleapis.com">
+
+<meta name="ahrefs-site-verification" content="6c1ac8124360ea59651c37f2de438b5b4ac7b4f23e665070c4bfa2a81ffbf807">
+<meta name="google-site-verification" content="p0iASMykZFhX7g5XOoMdDmEpHCXOaQzhHlIarsvmfWo" />
+
+
+{% if template  contains 'product.filotag_color' %}
+    <script>
+      console.log("Adding noindex nofolow");
+    </script>
+    <meta name="robots" content="noindex, nofollow">
+{% else %}
+  {% 	if template contains 'cart'
+      or template  contains 'something'
+      or template  contains 'collection'
+      or template  contains 'collections'
+      or template  contains 'product.filotag'
+      or page.id  == '25586794577'
+      or page.url == '/pages/terms-condition'
+      or page.url == '/pages/termini-condizioni'
+      or page.url == '/pages/privacy-policy'
+      or page.url == '/collections/all'
+      or page.url == '/pages/fattura-filo'
+      or page.url == '/pages/privacy-policy-app-en'
+      or page.url == '/pages/privacy-policy-app-it'
+      or page.url == '/pages/billing'
+      or page.url == '/pages/testtest'
+      or page.url == '/pages/test-test'
+      or page.url == '/pages/key-finder-new'
+  %}
+    <script>
+      console.log("Adding noindex");
+    </script>
+  	<meta name="robots" content="noindex, follow">
+  {% endif %}
+{% endif %}
+
+{% comment %}
+<script>
+  console.log("Tmpl___: {{template}}");
+  console.log("Page.id___: {{page.id}}");
+  console.log("Page.url___: {{page.url}}");
+  console.log("Page.title___: {{page.title}}");
+</script>
+{% endcomment %}
+
+{{ 'theme.scss.css' | asset_url | stylesheet_tag }}
+
+{% comment %}
+	<link href="{{'lt768.scss.css' | asset_url }}" rel="stylesheet" type="text/css" media="only screen and (max-width:768px)">
+	<!-- Theme CSS -->
+    {{ 'theme-filo.css' | asset_url | stylesheet_tag }}
+	<!-- Store object -->
+{% endcomment %}
+{% include 'fonts' %}
+
+{% include 'theme-options' %}
+
+{{ 'jquery-1.10.2.min.js' | asset_url | script_tag }}
+
+<script type="text/javascript">
+  function fc_get_img_url(url, w, h) {
+    {% comment %}//console.log("> > > " + url);{% endcomment %}
+    if (!h && !w) {
+      return url;
+    }
+    h = h ? Math.ceil(h/100)*100 : '';
+    w = w ? Math.ceil(w/100)*100 : '';
+    var x = url.lastIndexOf('.');
+    return url.substring(0,x) + '_' + w + 'x' + h + url.substring(x, url.length);
+  }
+
+  get_uid_or_random = () => {
+    try {
+      if (localStorage.getItem("uid")) {
+        return localStorage.getItem("uid");
+      }
+      const uid = (5000000000000 - Date.now()) + "_FF" +
+      Math.random().toString(36).substring(2, 6) +
+      Math.random().toString(36).substring(2, 6);
+      localStorage.setItem("uid", uid);
+      return uid;
+    } catch (err) {
+      return (5000000000000 - Date.now()) + "_FF" +
+      Math.random().toString(36).substring(2, 6) +
+      Math.random().toString(36).substring(2, 6);
+    }
+  }
+</script>
+
+<script>
+  function isMobile() {
+  	return window.innerWidth <= 576 ? 'M' : 'D';
+  }
+</script>
+
+{% comment %}Unbounce? Andrea G chiede di inserire il codice sottostante in mail del 4/12/2018
+<script src="https://b0ffd984c1504ecc896e388c5810a6cc.js.ubembed.com" async></script>
+{% endcomment %}
+
+{% comment %}
+<script>
+  console.log(" tmpl > {{ template }}");
+  if (["index","product.filotag","cart"].indexOf("{{ template }}") === -1) {
+     console.log("      >> {{ template }}");
+     
+  }
+</script>
+
+<script>
+  console.log(" tmpl > {{ template }}");
+  // console.log("img >>> " + url.substring(0,x) + '_' + w + 'x' + h + url.substring(x, url.length));
+</script>
+<!-- Deadline Funnel <script type="text/javascript" data-cfasync="false">function base64_encode(e){var r,t,c,a,h,n,o,A,i = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",d=0,l=0,s="",u=[];if(!e)return e;do r=e.charCodeAt(d++),t=e.charCodeAt(d++),c=e.charCodeAt(d++),A=r<<16|t<<8|c,a=A>>18&63,h=A>>12&63,n=A>>6&63,o=63&A,u[l++]=i.charAt(a)+i.charAt(h)+i.charAt(n)+i.charAt(o);while(d<e.length);s=u.join("");var C=e.length%3;var decoded = (C?s.slice(0,C-3):s)+"===".slice(C||3);decoded = decoded.replace("+", "-");decoded = decoded.replace("/", "_");return decoded;} var url = base64_encode(location.href);var parentUrl = (parent !== window) ? ('/' + base64_encode(document.referrer)) : '';(function() {var s = document.createElement('script');s.type = 'text/javascript';s.async = true;s.setAttribute("data-scriptid", "dfunifiedcode");s.src ="https://deadlinefunnel.com/unified/eyJpdiI6InlOb2trVmZnUmlzbWFNU1JrT29tU1E9PSIsInZhbHVlIjoiSjNnT2l5RjZ1blk4dW5EejZiUmEzZz09IiwibWFjIjoiMWRjZTQ3MGJlMzA2NTJhNDcxZDc1YTJjMjE4ZDUzYTc1MzgwMzRhZjRiNDRhMGVmNzdkMWY2N2MwNzM1ODY0YSJ9/"+url+parentUrl;var s2 = document.getElementsByTagName('script')[0];s2.parentNode.insertBefore(s, s2);})();</script> End Deadline Funnel -->
+<!-- end head -->
+{% endcomment %}

@@ -1,0 +1,50 @@
+{% comment %}
+<div class="module-wrapper">
+  <div class="module module-default-page">
+    <div class="module-header page-header">
+      <div class="module-title page-title">
+        <h1>{{ page.title }}</h1>
+      </div>
+    </div>
+    {% unless page.content == blank %}
+      <div class="module-body page-body rte">
+        {{ page.content }}
+      </div>
+    {% endunless %}
+  </div>
+</div>
+{% endcomment %}
+
+{% section 'papa-top-fb-slideshow' %}
+{% section 'papa-regala-color-slideshow' %}
+{% section 'papa-custom-html-1' %}
+{% section 'papa-custom-html-2' %}
+<div class="fc-papa-row">
+  <div class="fc-col1">
+      {% section 'testimonial' %}
+  </div>
+  <div class="fc-col2">
+      {% section 'fc-product-fb-slideshow' %}
+  </div>
+</div>
+{% section 'media2' %}
+<style>
+  .fc-papa-row {
+    background-color: #fff;
+    overflow: hidden;
+  }
+  .fc-col1,
+  .fc-col2 {
+    float: left;
+    width: 50%;
+    /*position: relative;
+    top: 50%;
+    transform: translateY(-50%);*/
+  }
+  @media screen and (max-width: 768px) {
+    .fc-col1,
+    .fc-col2 {
+      width: 100%;
+    }
+  }
+</style>

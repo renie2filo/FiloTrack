@@ -1,0 +1,19 @@
+<div class="module-wrapper fc-how-it-works fc-how-it-works-page-wrapper">
+
+
+{% section 'how-it-works-fb-slideshow-top' %}
+<div class="fc-scroll-down-conainer fc-bg-black fc-ta-c fc-pv-8" onclick="javascript:fc_scroll();"><span class="fc-scroll-down fc-white fc-fs-24"></span></div>
+<script>
+  fc_scroll = function(delta_y) {
+    var delta_y_ = delta_y ? delta_y : $(window).height();
+    $("html, body").animate({ scrollTop: $(window).scrollTop() + delta_y_ }, 400);
+  }
+</script>
+
+{% section 'how-it-works-alternating-content-1'%}
+
+{% section 'hiw-app-fb-color-slideshow'%}
+
+{% section 'fc-home-alternating-content'%}
+
+</div>

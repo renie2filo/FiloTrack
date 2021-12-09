@@ -1,0 +1,177 @@
+.fc-quantity-option-selector .fc-quantity-option {
+	border: 1px #000 solid;
+  	padding: 4px;
+    opacity: .3;
+    font-weight: normal;
+}
+.fc-quantity-option-selector .fc-quantity-option.fc-selected {
+	background-color: #000;
+  	opacity: 1;
+}
+.fc-quantity-option-selector .fc-quantity-option .fc-save-desc {
+	color: #000;
+}
+.fc-quantity-option-selector .fc-quantity-option.fc-selected .fc-save-desc {
+	color: #ff3545;
+} 
+/*.fc-quantity-option-selector .fc-quantity-option.fc-selected[fc-data-val^="2x Filo Tag"] {
+	background-color: #e3e3e3;
+}*/
+.fc-color-option-selector .fc-color-option {
+  	width: 40px;
+  	height: 40px;
+  	padding: 8px;
+  	border-radius: 4px;
+    display: inline-block;
+}
+.fc-color-option-selector .fc-color-option .fc-color-visual {
+    background-color: #eee;
+    border-radius: 4px;
+    height: 100%;
+    background-repeat: no-repeat;
+}
+.fc-color-option[fc-data-val='white'] .fc-color-visual,
+.fc-color-option[fc-data-val='mix4'] .fc-color-visual{
+    border: .5px solid #bbb;
+}
+.fc-color-option-selector .fc-color-option.fc-selected {
+	border: 2px #bbb solid;
+  	padding: 6px;
+}
+.fc-color-option-selector-text .fc-color-option.fc-selected {
+	background-color: #050;
+  	color: #fff;
+}
+.fc-price-old {
+	text-decoration: line-through;
+}
+.number-input-wrapper {
+	display: none;
+}
+.product-title h1 {
+	font-size: 36px; 
+}
+/* product-slideshow */
+.fc-color-option-selector .fc-color-option.fc-mix3,
+.fc-color-option-selector .fc-color-option.fc-mix6,
+.fc-color-option-selector .fc-color-option.fc-mix4,
+.fc-color-option-selector .fc-color-option.fc-mix8 {
+	display: none;
+}
+.product-slideshow-navigation.product-slideshow-previous.icon.icon-arrow-left,
+.product-slideshow-navigation.product-slideshow-next.icon.icon-arrow-right {
+  display: none;
+}
+.product-slideshow-pagination a.product-slideshow-pagination-item:nth-child(1) {
+	margin-left: 0 !important;
+}
+/* option selector */
+@media screen and (max-width: 720px) {
+  .product-form hr {
+    display: none;
+  }
+  .fc-color-par-wrap.fc-mv-24 {
+  	margin: 0;
+  }
+}
+@media screen and (max-width: 720px) {
+  .product-slideshow-navigation.product-slideshow-previous.icon.icon-arrow-left,
+  .product-slideshow-navigation.product-slideshow-next.icon.icon-arrow-right {
+    display: block;
+    font-size: 2em;
+    font-weight: bold;
+    color: rgba(68,68,68,.6);
+    display: inline-flex;
+    top: 0;
+    bottom: 0;
+  }
+  .product-slideshow-navigation.icon-arrow-left:before {
+    content: "\f104";
+    align-self: center;
+  }
+  .product-slideshow-navigation.icon-arrow-right:before {
+    content: "\f105";
+    align-self: center;
+  }
+  .fc-save-and-price {
+    font-size: .8em;
+  }
+}
+/* option selector */
+@media screen and (max-width: 720px) {
+  .product-form hr {
+    display: none;
+  }
+  .fc-color-par-wrap.fc-mv-24 {
+  	margin: 0;
+  }
+}
+/* product add to cart button */
+.fc-button-and-feature-list-container {
+  overflow: hidden;
+  margin: 16px 0;
+}
+.fc-add-to-cart {
+  margin: 8px 0;
+  display: inline;
+  width: 40%;
+  float: right;
+}
+.fc-add-to-cart .product-form-submit-wrap {
+  display: block;
+}
+.fc-add-to-cart .product-form-submit-wrap input.button.outline {
+  width: 100%;
+}
+.fc-add-to-cart .product-form-submit-wrap input.button.outline:not(.disabled) {
+  /*background-color: #00C956;*/
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 20px;
+}
+.fc-add-to-cart .product-form-submit-wrap input.button.outline:hover:not(.disabled) {
+  /*background-color: #02e362;*/
+  background-color: #444;
+}
+.fc-product-feature-list {
+  /*margin: 0 -8px;*/
+  margin: 8px 0;
+  width: 60%;
+  float: left;
+}
+@media screen and (max-width: 576px) {
+  .fc-add-to-cart,
+  .fc-product-feature-list {
+    width: 100%;
+  }
+}
+.fc-product-feature-list .fc-product-feature {
+  	/*padding: 0 8px;
+	width: 33%;
+	float: left;*/
+}
+.fc-product-feature-list .fc-product-feature div {
+	vertical-align: top;
+	display: inline-block;
+}
+.fc-product-feature-list .fc-product-feature div i {
+  	padding-right: 4px;
+}
+.fc-product-feature-list .fc-product-features-text {
+	font-size: 12px;
+}
+/* product tech spec */
+@media screen and (min-width: 992px) {
+  .product-specification-body .product-specification-left-right-text {
+      padding: 60px;
+  }
+}
+.fc_specifications {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .8s ease-in-out;
+}
+.fc_specifications.fc-show-spec {
+  max-height: 1000px;
+}

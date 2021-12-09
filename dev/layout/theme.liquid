@@ -1,0 +1,146 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie10 lt-ie9 lt-ie8 lt-ie7" lang="en"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie10 lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie10 lt-ie9" lang="en"><![endif]-->
+<!--[if IE 9 ]><html class="ie9 lt-ie10 no-js" lang="en"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><html class="no-js" lang="en"><![endif]-->
+<html>
+<head>
+  {% include 'elevar-head' %}
+  
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, inital-scale=1">
+
+{% assign tab_index = 0 %}
+
+{% if template == 'index' %}
+<title>{{ page_title }}</title>
+{% elsif template == '404' %}
+<title>{{ shop.name }} - {{ "general.404.title" | t }}</title>
+{% else %}
+<title>{{ page_title }}</title>
+{% endif %}
+
+{% if page_description %}
+<meta name="description" content="{{ page_description | escape }}" />
+{% endif %}
+
+{% include 'favicon' %}
+
+<link rel="canonical" href="{{ canonical_url }}" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+
+{{ content_for_header }}
+
+{% include 'social-meta' %}
+{% include 'scripts-styles-header' %}
+
+  
+{% comment %}<!-- HeapAnalytics Tracking Code for www.filotrack.com -->{% endcomment %}
+<script async type="text/javascript">
+    window.heap=window.heap||[],heap.load=function(e,t){window.heap.appid=e,window.heap.config=t=t||{};var r=t.forceSSL||"https:"===document.location.protocol,a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=(r?"https:":"http:")+"//cdn.heapanalytics.com/js/heap-"+e+".js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(a,n);for(var o=function(e){return function(){heap.push([e].concat(Array.prototype.slice.call(arguments,0)))}},p=["addEventProperties","addUserProperties","clearEventProperties","identify","removeEventProperty","setEventProperties","track","unsetEventProperty"],c=0;c<p.length;c++)heap[p[c]]=o(p[c])};
+    heap.load("335745698");
+  </script>
+
+
+<!-- <script data-cfasync="false" type="text/javascript" data-bablic="59ce72ef41c72274c118734b" data-bablic-m="[0,'en','en',1,['it'],0,0,0,0,0,0,0,0,[],'filotrack.com/',[],['_v',2]]" src="//cdn2.bablic.com/js/bablic.3.9.js"></script> -->
+  
+
+  {% render 'shogun-head' %}
+{% render 'weglot_hreftags' %}
+{% render 'weglot_switcher' %}
+</head>
+
+{% include 'additional-classes' %}
+
+<body class="{{ bodyClasses }}">
+
+<script>
+  fc_insert_doubleclick = () => {
+    console.log("fid-exec")
+  }
+</script>
+
+{% comment %}
+<!-- a useful set of tag for GTM/doubleclick -->
+{% if template == "cart" %}
+  <script type="text/javascript">
+
+  const Revenue = "{{transaction.amount}}";
+  const product_name = "{{product.title}}";
+  const page_url = "{{ current_url }}";
+  const product_catergory = "{{product.type}}";
+  const SKU_ID = "{{product.id}}";
+  const OrderID = "{{transaction.id}}";
+  const device = isMobile()
+  const pageurl = window.location.href
+  const promocode = null
+
+  var axel = Math.random() + "";
+  var a = axel * 10000000000000 * 1000;
+  console.log(a)
+
+  document.write('<iframe src="https://9821076.fls.doubleclick.net/activityi;src=9821076;type=pesal0;cat=cartc0;u1=device;u2=pageurl;u3=promocode;u4=productname;u5=productid;u6=productsales;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;tfua=;npa=;ord=' + a + '?" width="1" height="1" frameborder="0" style="display:none"></iframe>');
+  </script>
+  <noscript>
+    <iframe src="https://9821076.fls.doubleclick.net/activityi;src=9821076;type=pesal0;cat=cartc0;u1=device;u2=pageurl;u3=promocode;u4=productname;u5=productid;u6=productsales;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;tfua=;npa=;ord=1?" width="1" height="1" frameborder="0" style="display:none"></iframe>
+  </noscript>
+{% endif %}
+{% endcomment %}
+
+
+  {% section 'general-header' %}
+
+  <main class="main-content">
+   {% unless template contains 'index' or fullBleed or template contains 'how-it-works' or template contains 'contact-new' or template contains 'corporate'%}
+      {% unless template contains 'slideshow' and settings.product-slideshow-layout == 'full-width' %}
+        {% include 'breadcrumbs' %}
+      {% endunless %}
+    {% endunless %}
+
+    {{ content_for_layout }}
+  </main>
+
+  {% section 'general-newsletter' %}
+
+  {% section 'general-social-feeds' %}
+
+  {% section 'general-footer' %}
+
+  {% include 'scripts-styles-footer' %}
+
+{% comment %}
+<!-- Google Code per il tag di remarketing -->
+<!--------------------------------------------------
+I tag di remarketing possono non essere associati a informazioni di identificazione personale o inseriti in pagine relative a categorie sensibili. Ulteriori informazioni e istruzioni su come impostare il tag sono disponibili alla pagina: http://google.com/ads/remarketingsetup
+--------------------------------------------------->
+
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 945262058;
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script>
+<script async type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script>
+{% endcomment %}
+
+  {% include 'elevar-body-end' %}
+    <!-- FRESHCHAT Snippet Start --> {% if customer %} <script> 
+                        if (typeof window.fcSettings === 'undefined') {
+                          window.fcSettings = {};
+                        }
+                        window.fcSettings.email = '{{ customer.email }}';
+                        window.fcSettings.firstName = '{{ customer.first_name }}';
+                        window.fcSettings.lastName = '{{ customer.last_name }}'; 
+                        window.fcSettings.externalId = '{{ customer.email }}';
+                        window.fcSettings.customerId = '{{ customer.id }}';
+                        if ('{{customer.phone}}') window.fcSettings.phone = '{{ customer.phone}}';
+                        window.fcSettings.shopify_token = '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';
+                        if ('{{customer.metafields.freshchat.restoreId}}') window.fcSettings.restoreId ='{{ customer.metafields.freshchat.restoreId }}';
+                      </script> {% endif %}  <!-- FRESHCHAT Snippet End -->
+{% include 'gtranslate', float: 'yes' %}
+</body>
+</html>

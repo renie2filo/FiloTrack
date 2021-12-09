@@ -1,0 +1,568 @@
+<!-- minor css aaaaaaaaa   {{ "Tata_comunicato_stampa_ottobre_2018.pdf" | asset_url }}-->
+{{ '//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css' | stylesheet_tag }}
+
+<!-- Scripts -->
+{{ 'api.jquery.js' | shopify_asset_url | script_tag }}
+
+{% if template contains 'cart' %}
+  {{ "jquery.tmpl.min.js" | asset_url | script_tag }}
+  {{ "/services/javascripts/countries.js" | script_tag }}
+  {{ "shopify_common.js" | shopify_asset_url | script_tag }}
+  {{ 'jquery.cart.min.js' | asset_url | script_tag }}
+{% endif %} 
+
+{% if template contains 'customers' %}
+  {{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+  {{ 'customer_area.js'  | shopify_asset_url | script_tag }}
+{% endif %}
+
+{% if settings.show-currency-switcher %}
+  {{ "//cdn.shopify.com/s/javascripts/currencies.js" | script_tag }}
+  {{ "jquery.currencies.js" | asset_url | script_tag }}
+{% endif %}
+
+<script src="{{ 'modernizr-2.7.1.min.js'.js' | asset_url }}" async></script>
+
+{{ 'plugins.js'  | asset_url | script_tag }}
+<script src="{{ 'fc-site.js' | asset_url }}" async></script>
+
+{% comment %}
+{{ 'modernizr-2.7.1.min.js' | asset_url | script_tag }}
+<script data-cfasync="false" type="text/javascript" data-bablic="59ce72ef41c72274c118734b" data-bablic-m="[0,'en','en',0,['it'],0,0,0,0,0,0,0,0,[],'filotrack.myshopify.com/',[],['_v',2]]" src="//cdn2.bablic.com/js/bablic.3.9.js"></script>
+{% endcomment %}
+
+<script>
+{% comment %}
+// this script fill each image with a "data-img-fill" attr; this images have a blurred placeholder during the DOM construction,
+// that is subsequently replaced with the right, not blurred, image
+//  console.log($(elem).attr('class') + ":   --> " + $(elem).width());
+{% endcomment %}
+$("img[data-img-fill]").each( function(index, elem) {
+  	$(elem).attr("src", fc_get_img_url($(elem).attr("data-img-fill"), $(elem).width())).on('load', function() {
+      // console.log($(elem).attr('class') + ": --> " + $(elem).width());
+      $(this).css("filter", "none");
+    });
+});
+</script>
+
+
+<script type="text/javascript">
+var _iub = _iub || [];
+_iub.csConfiguration = {
+  "cookiePolicyInOtherWindow":true,
+  "enableRemoteConsent":true,
+  "lang":bablic.getLocale(),
+  "siteId":188811,
+  "cookiePolicyId":776173,
+  "banner":{
+    "slideDown":false,
+    "textColor":"#fff",
+    "backgroundColor":"#444",
+    "position":"float-bottom-right"
+  }
+};
+</script>
+<script type="text/javascript" src="//cdn.iubenda.com/cs/iubenda_cs.js" charset="UTF-8" async></script>
+
+
+<style>
+  /* fc-icon-font theicontest */
+  @font-face {
+    font-family: "fc-icon-font";
+    src:url("{{ 'fc-icon-font.eot' | asset_url }}");
+    src:url("{{ 'fc-icon-font.eot?#iefix' | asset_url }}") format("embedded-opentype"),
+      url("{{ 'fc-icon-font.woff' | asset_url }}") format("woff"),
+      url("{{ 'fc-icon-font.ttf' | asset_url }}") format("truetype"),
+      url("{{ 'fc-icon-font.svg#fc-icon-font' | asset_url }}") format("svg");
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @charset "UTF-8";
+
+  [data-icon]:before {
+    font-family: "fc-icon-font" !important;
+    content: attr(data-icon);
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    speak: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  [class^="fc-icon-"]:before,
+  [class*=" fc-icon-"]:before {
+    font-family: "fc-icon-font" !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    speak: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .fc-icon-battery:before {
+    content: "\61";
+  }
+  .fc-icon-battery.fc-icon-ta-l,
+  .fc-icon-battery.fc-icon-ta-r {
+  	margin-left: -0.144em;
+  }
+  .fc-icon-key:before {
+    content: "\62";
+  }
+  .fc-icon-map:before {
+    content: "\63";
+  }
+  .fc-icon-sound-filo:before {
+    content: "\64";
+  }
+
+  .fc-icon-battery:before {
+    content: "\e900";
+  }
+  .fc-icon-flag:before {
+    content: "\e901";
+  }
+  .fc-icon-key:before {
+    content: "\e902";
+  }
+  .fc-icon-map:before {
+    content: "\e903";
+  }
+  .fc-icon-phone:before {
+    content: "\e904";
+  }
+  .fc-icon-sound-filo:before {
+    content: "\e905";
+  }
+  .fc-icon-truck:before {
+    content: "\e906";
+  }
+  .fc-icon-warranty:before {
+    content: "\e907";
+  }
+</style>
+
+<script>
+  $.post(
+    "https://us-central1-filotrack-analytics.cloudfunctions.net/fc_user_visit",
+    {
+      uid:get_uid_or_random(),
+      date:Date.now(),
+      visited_url:window.location.pathname
+    }, 
+    function(returnedData){
+    }
+  );
+</script>
+
+{% if template == 'product.filotag' or template == 'product.amazon-gift' or template == 'product.filotag_color' or page.url == '/pages/key-finder-new' or page.url == '/pages/keyfinder' or page.url == '/pages/wallet-finder' or page.url == '/pages/luggage-finder'   %}
+  {{ 'theme-fc-product.css' | asset_url | stylesheet_tag }}
+  <script type="text/javascript">
+    var var_name = '';
+    var var_id = '';
+
+    $(window).on("load", function() {
+      $("#fc-slider-product").css("opacity", "1"); 
+      var u = window.location.href; 
+      if ( u.indexOf("variant") == -1 ) {
+        $($(".fc-quantity-option")[0]).click();        
+      } else {
+        $(".fc-quantity-option.fc-selected").click();
+      }
+      $(".product-image-container.clearfix").css("opacity", "1"); 
+    });
+
+    function fc_quantity_option_selected(elem) {
+      $(".fc-quantity-option").removeClass("fc-selected");
+      $(elem).addClass("fc-selected");
+      $(elem).parents(".fc-selector-wrapper").find(".fc-quantity-option-selector select").val($(elem).attr("fc-data-val")).trigger('change');
+      var_name = $(elem).attr("fc-data-variant-name");
+      var_id = $(elem).attr("fc-data-variant-id");
+      console.log("--> " + var_id  + "   " + var_name);
+      fc_quantity_option_selected_change_color(elem);
+      product_changed_recall_ts();
+    }
+
+    function fc_select_color_option(elem) {
+      if ($(elem).hasClass("fc-color-option")) {
+        $(elem).click()
+      }
+    }
+
+    function fc_quantity_option_selected_change_color(elem) {
+      if ( $(elem).attr("fc-data-val").indexOf("8x") != -1 ) {
+        $(".fc-color-option-selector .fc-color-option.fc-mix2").css("display","none");
+        $(".fc-color-option-selector .fc-color-option.fc-single").css("display","none");
+        $(".fc-color-option-selector .fc-color-option.fc-mix4").css("display","none");
+        $(".fc-color-option-selector .fc-color-option.fc-mix8").css("display","inline-block");
+      } else if ( $(elem).attr("fc-data-val").indexOf("4x") != -1 ) {
+        $(".fc-color-option-selector .fc-color-option.fc-mix2").css("display","none");
+        $(".fc-color-option-selector .fc-color-option.fc-single").css("display","none");
+        $(".fc-color-option-selector .fc-color-option.fc-mix8").css("display","none");
+        $(".fc-color-option-selector .fc-color-option.fc-mix4").css("display","inline-block");
+      } else if ( $(elem).attr("fc-data-val").indexOf("2x") != -1 ) {
+        $(".fc-color-option-selector .fc-color-option.fc-mix4").css("display","none");
+        $(".fc-color-option-selector .fc-color-option.fc-single").css("display","none");
+        $(".fc-color-option-selector .fc-color-option.fc-mix8").css("display","none");
+        $(".fc-color-option-selector .fc-color-option.fc-mix2").css("display","inline-block");
+      } else {
+        $(".fc-color-option-selector .fc-color-option.fc-mix3").css("display","none");
+      	$(".fc-color-option-selector .fc-color-option.fc-mix6").css("display","none"); 
+        $(".fc-color-option-selector .fc-color-option.fc-mix2").css("display","none");
+        $(".fc-color-option-selector .fc-color-option.fc-mix4").css("display","none");
+        $(".fc-color-option-selector .fc-color-option.fc-mix8").css("display","none");
+        $(".fc-color-option-selector .fc-color-option.fc-single").css("display","inline-block");
+      }
+
+      if ( $(".fc-color-option.fc-selected:visible").length === 0) {
+        fc_select_color_option($($(".fc-color-option:visible")[0]))
+      }
+    }
+    function fc_color_option_selected(elem) {
+      $(".fc-color-option").removeClass("fc-selected");
+      $(elem).addClass("fc-selected");
+      $(elem).parents(".fc-selector-wrapper").find(".fc-color-option-selector select")
+      .val($(elem).attr("fc-data-val")).trigger('change');
+    }
+
+    $(window).on("load", function() {
+      $("#fc-slider-product").css("opacity", "1"); 
+      var u = window.location.href; 
+      if ( u.indexOf("variant") == -1 ) {
+        if ( $(".fc-quantity-option").length > 2) {
+          $($(".fc-quantity-option")[2]).click();
+        } else {
+          $($(".fc-quantity-option")[1]).click();        
+        }
+      } else {
+        $(".fc-quantity-option.fc-selected").click();
+      }
+
+      $(".product-image-container.clearfix").css("opacity", "1"); 
+    });
+  </script>
+{% endif %}
+
+
+{% if false %}
+  {{ 'theme-fc-product.css' | asset_url | stylesheet_tag }}
+
+  <script type="text/javascript">
+    var var_name = '';
+    var var_id = '';
+    
+    function fc_quantity_option_selected(elem) {
+      $(".fc-quantity-option").removeClass("fc-selected");
+      $(elem).addClass("fc-selected");
+      $(elem).parents(".fc-selector-wrapper").find(".fc-quantity-option-selector select").val($(elem).attr("fc-data-val")).trigger('change');
+      var_name = $(elem).attr("fc-data-variant-name");
+      var_id = $(elem).attr("fc-data-variant-id");
+      console.log("!>>>> " + var_id  + "   " + var_name);
+      product_changed_recall_ts();
+    }
+      
+    $(window).on("load", function() {
+      $("#fc-slider-product").css("opacity", "1"); 
+      var u = window.location.href; 
+      if ( u.indexOf("variant") == -1 ) {
+        if ( $(".fc-quantity-option").length > 2) {
+        	$($(".fc-quantity-option")[2]).click();
+        } else {
+        	$($(".fc-quantity-option")[1]).click();        
+        }
+      } else {
+      	$(".fc-quantity-option.fc-selected").click();
+      }
+      {% comment %}
+        /*
+        if ($(".product-slideshow-pagination.product-thumbnails a").length >= 1) {
+          $(".product-slideshow-pagination.product-thumbnails a:visible")[0].click();
+        }*/
+      {% endcomment %}
+      $(".product-image-container.clearfix").css("opacity", "1"); 
+    });
+  </script>
+{% endif %}
+
+
+
+{% if false %}
+  <script type="text/javascript">
+    console.log('page_id: {{ page.id }}');
+  </script>
+{% endif %}
+
+{% if page.id == 265121611 %}
+  <link href="https://file.myfontastic.com/XGUcfgcQGbvf4gmtEfupQK/icons.css" rel="stylesheet">
+{% endif %}
+
+{% if page.id == 258297747 %}
+  <script type="text/javascript">
+   (function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "//cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);
+  </script>
+{% endif %}
+
+{% comment %}
+privacy_policy_app_it -->
+privacy_policy --> 258297747
+testtest --> 265121611
+{% endcomment %}
+
+
+{% if template == 'index' %}
+  <script type="text/javascript">
+      console.log("ts index");
+      window._adftrack = Array.isArray(window._adftrack) ? window._adftrack : (window._adftrack ? [window._adftrack] : []);
+      window._adftrack.push({
+          pm: 1465334,
+          divider: encodeURIComponent('|'),
+          pagename: encodeURIComponent('Homepage'),
+          order : { 
+               sv1: isMobile(),
+               sv2: encodeURIComponent(window.location.href),
+              //  sv3: bablic.getLocale()
+          }
+      });
+      (function () { var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = 'https://track.adform.net/serving/scripts/trackpoint/async/'; var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x); })();
+
+  </script>
+  <noscript>
+      <p style="margin:0;padding:0;border:0;">
+          <img src="https://track.adform.net/Serving/TrackPoint/?pm=1465334&ADFPageName=Homepage&ADFdivider=|" width="1" height="1" alt="" />
+      </p>
+  </noscript>
+{% endif %}
+
+{% if template != 'index' and template != 'cart' and template != 'product.filotag' and template != 'product.filotag_color' and template != 'product.amazon-gift'%}
+  <script type="text/javascript">
+      console.log("ts allpages");
+      window._adftrack = Array.isArray(window._adftrack) ? window._adftrack : (window._adftrack ? [window._adftrack] : []);
+      window._adftrack.push({
+          pm: 1465334,
+          divider: encodeURIComponent('|'),
+          pagename: encodeURIComponent('CMSPage'),
+          order : { 
+               sv1: isMobile(),
+               sv2: encodeURIComponent(window.location.href),
+              //  sv3: bablic.getLocale()
+          }
+      });
+      (function () { var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = 'https://track.adform.net/serving/scripts/trackpoint/async/'; var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x); })();
+  </script>
+  <noscript>
+      <p style="margin:0;padding:0;border:0;">
+          <img src="https://track.adform.net/Serving/TrackPoint/?pm=1465334&ADFPageName=CMSPage&ADFdivider=|" width="1" height="1" alt="" />
+      </p>
+  </noscript>
+{% endif %}
+
+{% if template != 'cart' and
+      template  != 'blog' and
+      template  != 'article'
+%}
+  <script type="text/javascript">
+    {% comment %}
+    /*
+
+      template != 'product.filotag' and
+      template != 'product.filotag_color' and
+
+      page.url != '/pages/key-finder' and
+      page.url != '/pages/key-finder-new' and
+      page.url != '/pages/wallet-finder' and
+      page.url != '/pages/luggage-finder'
+
+    */
+    {% endcomment %}
+    var banner_list = ['fc-tata']; // , 'fc-valentine'
+
+    if        (Date.now() >= 1574294399000 -3600000 && Date.now() < 1575331199000 -3600000) {
+      banner_list.pop()
+    }
+    if        (Date.now() >= 1574294399000 -3600000 && Date.now() < 1574985599000 -3600000) { // between [21 28]
+      banner_list.push('fc-bf0')
+    } else if (Date.now() >= 1574985599000 -3600000 && Date.now() < 1575071999000 -3600000) { // the [29]
+      banner_list.push('fc-bf1')
+    } else if (Date.now() >= 1575071999000 -3600000 && Date.now() < 1575158399000 -3600000) { // the [30]
+      banner_list.push('fc-bf2')
+    } else if (Date.now() >= 1575158399000 -3600000 && Date.now() < 1575244799000 -3600000) { // the [1]
+      banner_list.push('fc-bf3')
+    } else if (Date.now() >= 1575244799000 -3600000 && Date.now() < 1575331199000 -3600000) { // the [2]
+      banner_list.push('fc-bf4')
+    }
+
+    // const lan = bablic.getLocale() === 'en' ? '-en' : ''
+    
+    // const page_lan = bablic.getLocale()
+
+    var banner_rand_index = Math.floor(Math.random() * (banner_list.length+1));
+    
+    $(".fc-banner-wrapper").addClass(banner_list[banner_rand_index]).empty().append(      
+     '<a class="fc-banner-a fc-ta-c fc-new" href="https://getmytata.com/en/"><div class="fc-banner fc-tata fc-fs-12"><div class="fc-banner-button">Discover <img class="tata-logo" style="max-width:56px; margin-top: 4px;"src="{{ "tata-logo-white.svg" | asset_url }}"> the anti-abandon cushion that warns you if your child is still in the car > </div></div></a>' +
+
+      '<a class="fc-banner-a fc-ta-c fc-new" href="https://landing.filotrack.com/blackdays-2019-en"><div class="fc-banner fc-blackfriday fc-bf0 fc-fs-12"><div class="fc-banner-button">Here come Filo\'s <b>#blackdays</b> 2019, get Filo Tag up to 30% OFF. Starting from the 29th Nov to 2nd Dec. Sign up to be notified ></div></div></a>' +
+
+      '<a class="fc-banner-a fc-ta-c fc-new" href="https://www.filotrack.com/products/filo-tag?variant=4073229516811"><div class="fc-banner fc-blackfriday fc-bf1 fc-fs-12"><div class="fc-banner-button"><b>#blackdays</b> - 30% discount on a Filo Tag. Get the Discount by adding to your cart today ></div></div></a>' +
+
+      '<a class="fc-banner-a fc-ta-c fc-new" href="https://www.filotrack.com/products/filo-tag?variant=4073229516811"><div class="fc-banner fc-blackfriday fc-bf2 fc-fs-12"><div class="fc-banner-button"><b>#blackdays</b> - 25% discount on a Filo Tag. Get the Discount by adding to your cart today ></div></div></a>' +
+
+      '<a class="fc-banner-a fc-ta-c fc-new" href="https://www.filotrack.com/products/filo-tag?variant=4073229516811"><div class="fc-banner fc-blackfriday fc-bf3 fc-fs-12"><div class="fc-banner-button"><b>#blackdays</b> - 15% discount on a Filo Tag. Get the Discount by adding to your cart today ></div></div></a>' +  
+
+      '<a class="fc-banner-a fc-ta-c fc-new" href="https://www.filotrack.com/products/filo-tag?variant=4073229516811"><div class="fc-banner fc-blackfriday fc-bf4 fc-fs-12"><div class="fc-banner-button"><b>#blackdays</b> - Its Cyber Monday, only for a few hours get 17% OFF on a Filo Tag. Add to cart and receive discount ></div></div></a>' +      
+
+      '<a class="fc-banner-a fc-ta-c" href="https://filotrack.com/products/filo-tag">' +
+      '<div class="fc-banner fc-valentine fc-fs-12"><div class="fc-banner-button">Always close to you &middot; <b>PROMO Valentine\'s day -30% </b> >' +
+    '</div></div></a>'
+    );
+    fc_change_banner();
+
+    setInterval(function(){
+      fc_change_banner();
+    }, 30000);
+
+    function fc_change_banner() {
+      var banner_rand_next = (banner_rand_index+1)%banner_list.length;
+      $(".fc-banner-wrapper .fc-banner").removeClass("fc-banner-on");
+      $(".fc-banner-wrapper .fc-banner." + banner_list[banner_rand_next]).addClass("fc-banner-on");
+      banner_rand_index = banner_rand_next;
+    }
+  </script>
+{% endif %}
+
+{% if template == 'product.filotag' or template == 'product.amazon-gift'  or template == 'product.filotag_color' or page.url == '/pages/key-finder-new' or page.url == '/pages/keyfinder' or page.url == '/pages/wallet-finder' or page.url == '/pages/luggage-finder' %}
+  <script type="text/javascript">
+      console.log("ts product");
+      window._adftrack = Array.isArray(window._adftrack) ? window._adftrack : (window._adftrack ? [window._adftrack] : []);
+      window._adftrack.push({
+          pm: 1465334,
+          divider: encodeURIComponent('|'),
+          pagename: encodeURIComponent('ProductPage'),
+          order : { 
+               sv1: 'D',
+               sv2: encodeURIComponent(window.location.href),
+              //  sv3: bablic.getLocale(),
+               itms: [{productid: var_id, productname: var_name, productsales: 1, step: '1', weight: '5'}]
+          }
+      });
+      (function () { var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = 'https://track.adform.net/serving/scripts/trackpoint/async/'; var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x); })();
+
+    
+    function product_changed_recall_ts() {
+      console.log("ts product");
+      window._adftrack = Array.isArray(window._adftrack) ? window._adftrack : (window._adftrack ? [window._adftrack] : []);
+      window._adftrack.push({
+          pm: 1465334,
+          divider: encodeURIComponent('|'),
+          pagename: encodeURIComponent('ProductPage'),
+          order : { 
+               sv1: 'D',
+               sv2: encodeURIComponent(window.location.href),
+              //  sv3: bablic.getLocale(),
+               itms: [{productid: var_id, productname: var_name, productsales: 1, step: '1', weight: '5'}]
+          }
+      });
+      (function () { var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = 'https://track.adform.net/serving/scripts/trackpoint/async/'; var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x); })();  
+    }
+  </script>
+  <noscript>
+      <p style="margin:0;padding:0;border:0;">
+          <img src="https://track.adform.net/Serving/TrackPoint/?pm=1465334&ADFPageName=ProductPage&ADFdivider=|" width="1" height="1" alt="" />
+      </p>
+  </noscript>
+{% endif %}
+
+{% if template == 'cart' %}
+
+  <script type="text/javascript">
+
+    {% comment %}The following to lines trigger an auto-refresh when quantity is changed in the cart{% endcomment %}
+    $("div.number-input-nav").click( () => { fc_quantity_input_changed() })
+
+      //console.log("CART: " + JSON.stringify({{ cart | json }}));
+      const cart = {{ cart | json }};
+      var itms = [];
+      for (var i = 0; i < cart.items.length; i++) {
+        var item_ = cart.items[i];
+        var newItem = {};
+        //console.log("ITEM: " + item_.id + " - " + parseInt(item_.price)/100 + " - " + item_.quantity + " - " + item_.sku);
+        newItem["productcount"] = item_.quantity;
+        newItem["productid"] = item_.variant_id;
+        newItem["productname"] = item_.sku;
+        newItem["productsales"] = "" + (parseInt(item_.price)/100);
+        newItem["step"] = '2';
+        newItem["weight"] = '50';
+        itms.push(newItem);
+      }
+    
+    
+      window._adftrack = Array.isArray(window._adftrack) ? window._adftrack : (window._adftrack ? [window._adftrack] : []);
+      window._adftrack.push({
+          pm: 1465334,
+          divider: encodeURIComponent('|'),
+          pagename: encodeURIComponent('Cart'),
+          order : { 
+               sv1: isMobile(),
+               sv2: window.location.href,
+              //  sv3: bablic.getLocale(),
+               sv4: "",
+               itms: itms
+          }
+      });
+      (function () { var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = 'https://track.adform.net/serving/scripts/trackpoint/async/'; var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x); })();
+  
+    
+    console.log("ts checkout");
+
+     call_ts = () => {
+     $('body').append('<p style="margin:0;padding:0;border:0;">' +
+                 '<img id="fc-tts" src="https://track.adform.net/Serving/TrackPoint/?pm=1465334&ADFPageName=Checkout&ADFdivider=|" width="1" height="1" alt="" />' +
+                 '</p>');
+      
+      
+	 window._adftrack = Array.isArray(window._adftrack) ? window._adftrack : (window._adftrack ? [window._adftrack] : []);
+     window._adftrack.push({
+        pm: 1465334,
+        divider: encodeURIComponent('|'),
+        pagename: encodeURIComponent('Checkout'),
+        order : { 
+          sv1: isMobile(),
+          sv2: window.location.href,
+          // sv3: bablic.getLocale(),
+          sv4: "",
+          itms: itms
+        }
+      });
+    (function () { var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = 'https://track.adform.net/serving/scripts/trackpoint/async/'; var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x); })();
+    
+       $("#fc-tts").one("load", function() {
+         script_called = true;
+         $(".button.secondary.inverse.cart-button").click();
+       }).each(function() {
+         if(this.complete) $(this).load();
+       });
+    }
+    
+    var script_called = false;
+    $(".button.secondary.inverse.cart-button").bind('click', function(event) {
+      if (!script_called) {
+      	  call_ts();
+	  	  event.preventDefault();
+      }
+    });
+
+    
+  </script>
+  <noscript>
+      <p style="margin:0;padding:0;border:0;">
+          <img src="https://track.adform.net/Serving/TrackPoint/?pm=1465334&ADFPageName=Cart&ADFdivider=|" width="1" height="1" alt="" />
+      </p>
+  </noscript>
+
+{% endif %}

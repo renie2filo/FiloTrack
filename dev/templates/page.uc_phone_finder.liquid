@@ -1,0 +1,24 @@
+{%comment %}
+<div class="module-wrapper fc-how-it-works">
+  <div class="module module-default-page">
+    <div class="module-header page-header">
+      <div class="module-title page-title">
+        <h1>{{ page.title }}   </h1>
+      </div>
+    </div>
+    {% unless page.content == blank %}
+      <div class="module-body page-body rte">
+        {{ page.content }}
+      </div>
+    {% endunless %}
+  </div>
+</div>
+{%endcomment%}
+
+<div class="module-wrapper fc-phone-finder fc-use-case fc-js-trigger">
+{% section 'uc-phone-finder-top-slideshow'%}
+{% section 'uc-phone-finder-alternating-content'%}
+{% section 'uc-phone-finder-bottom-bg_mob_img_block'%}
+</div>
+
+

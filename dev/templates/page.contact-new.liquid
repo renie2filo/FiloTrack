@@ -1,0 +1,37 @@
+{%comment %}
+<div class="module-wrapper fc-corporate">
+  <div class="module module-default-page">
+    <div class="module-header page-header">
+      <div class="module-title page-title">
+        <h1>{{ page.title }}</h1>
+      </div>
+    </div>
+    {% unless page.content == blank %}
+      <div class="module-body page-body rte">
+        {{ page.content }}
+      </div>
+    {% endunless %}
+  </div>
+</div>
+{%endcomment%}
+
+<div class="fc-js-trigger">
+
+{% section 'contact-slideshow'%}
+{% section 'contact-text-with-icon' %}
+
+<div class="contactbulkorders" style="display:none;">
+{% section 'contact-bulk-orders-form' %}
+</div>
+<script>
+  function fc_show_contactbulkorders() {
+  	$(".contactbulkorders").show();
+    
+    $('html, body').animate({
+		scrollTop: $(".contactbulkorders").offset().top -100
+	}, 500, 'linear');
+  }  
+</script>
+{% section 'module-map' %}
+
+</div>

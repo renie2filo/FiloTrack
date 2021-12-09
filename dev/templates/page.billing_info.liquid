@@ -1,0 +1,67 @@
+<div class="module-wrapper">
+  <div class="module module-default-page">
+    <div class="module-header page-header">
+      <div class="module-title page-title">
+        <h1>{{ page.title }}</h1>
+      </div>
+    </div>
+      <div class="module-body page-body rte">
+        {{ page.content }}
+        <p>
+          If required, we will be able to provide a VAT included Invoice within 24 hours of your purchase.<br>
+          Send us your billing details to <span class="fc-emph2">billing@filotrack.com</span>, indicating in the subject:
+          <span class="fc-emph2">Invoice Request <span class="fc-oid"></span></span>.<br>
+          Please include either of the following details:
+        </p>
+        <div class="fc-pv-32">
+          <p class="fc-pv-8">
+            for a Physical Person:
+          </p>
+          <ul class="fc-mv-8">
+            <li>
+              Complete Name or Business name
+            </li>
+            <li>
+              Billing address or Legal Address
+            </li>
+            <li>
+              Tax code and VAT Number
+            </li>
+            <li class="bablic-hide-en bablic-hide-fr bablic-hide-de">
+            	Codice destinatario o indirizzo PEC
+            </li>
+          </ul>
+        </div>
+        <div class="fc-pv-32">
+          <p class="fc-pv-8">
+            for a Company:
+          </p>
+          <ul class="fc-mv-8">
+            <li>
+              Business name
+            </li>
+            <li>
+              Legal Address
+            </li>
+            <li>
+              VAT Number
+            </li>
+            <li class="bablic-hide-en bablic-hide-fr bablic-hide-de">
+            	Codice destinatario o indirizzo PEC
+            </li>
+          </ul>
+        </div>
+        <script>
+          var s = window.location.href;
+          var oid = "YOUR_ORDER_NUMBER"
+          var oid_start = s.indexOf("?oid=") > -1 ? s.indexOf("?oid=") : s.indexOf("&oid=");
+          if (oid_start > -1) {
+          	oid_end = s.indexOf("&", oid_start + 1) > -1 ? s.indexOf("&", oid_start + 1) : s.length;
+            oid = s.substring(oid_start + 5, oid_end);
+          }
+          console.log("> " + oid);
+          jQuery(".fc-oid").empty().append(oid);
+        </script>
+      </div>
+  </div>
+</div>

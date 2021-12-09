@@ -1,0 +1,123 @@
+<div id="stripeint" class="fc-p-16">
+  <div class="fc-emph2 fc-fs-24">Filo Tag</div>
+
+<!-- www.123contactform.com script begins here -->
+<script type="text/javascript" defer src="//www.123contactform.com/embed/3209568.js" data-role="form" data-default-width="650px"></script>
+<!-- www.123contactform.com script ends here -->
+
+</div>
+
+
+
+
+
+
+{% comment %}
+  Filo Tag
+  <form action="/your-server-side-code" method="POST">
+  <script
+    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    data-key="pk_live_jSeMjF6ewGbqoSf5z4ri6JuD"
+    data-amount="3490"
+    data-name="Stripe.com"
+    data-description="Filo Tag Nero"
+    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+    data-locale="auto"
+    data-zip-code="true"
+    data-currency="eur">
+  </script>
+  </form>
+
+  Filo Tag x2
+  <form action="/your-server-side-code" method="POST">
+  <script
+    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    data-key="pk_live_jSeMjF6ewGbqoSf5z4ri6JuD"
+    data-amount="5980"
+    data-name="Stripe.com"
+    data-description="2 widgets"
+    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+    data-locale="auto"
+    data-zip-code="true"
+    data-currency="eur">
+  </script>
+  </form>
+
+  Filo Tag x4
+  <form action="/your-server-side-code" method="POST">
+  <script
+    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    data-key="pk_live_jSeMjF6ewGbqoSf5z4ri6JuD"
+    data-amount="11960"
+    data-name="Stripe.com"
+    data-description="2 widgets"
+    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+    data-locale="auto"
+    data-zip-code="true"
+    data-currency="eur">
+  </script>
+  </form>
+
+  Filo Classic
+  <form action="/your-server-side-code" method="POST">
+  <script
+    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    data-key="pk_live_jSeMjF6ewGbqoSf5z4ri6JuD"
+    data-amount="2000"
+    data-name="Stripe.com"
+    data-description="2 widgets"
+    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+    data-locale="auto"
+    data-zip-code="true"
+    data-currency="eur">
+  </script>
+  </form>
+
+  <div id="stripecopy">
+  </div>
+
+  <script>
+
+    $.get(
+      "https://www.123contactform.com/js-form-username-3209568.html?ref=https%3A%2F%2Ffilotrack.com%2Fpages%2Fpay&_referrer_=&_embedType_=embed.js",
+      function( data ) {
+          $( "#stripecopy" ).html( data );
+          console.log( "Load was performed." );
+      });
+
+    var iframe_ = "culo";
+    setTimeout(
+      function() {
+          console.log("starting manipulation.");
+          iframe_ = jQuery("#stripeint").find("iframe");
+          console.log(iframe_.length + " iframe found."); 
+          if (iframe_.length > 0) {
+            jQuery("#stripeint").show();
+
+            var div1 = document.createElement("div");
+            div1.text = "stocazzo"; 
+            iframe_.document.body.appendChild(div1);
+
+            var cssLink = document.createElement("link");
+            cssLink.href = "style.css"; 
+            cssLink.rel = "stylesheet"; 
+            cssLink.type = "text/css"; 
+            iframe_.document.body.appendChild(cssLink);
+
+            var innerDocument = iframe_.contentDocument;
+            console.log(">>>> " + innerDocument.getElementsByTagName("div").length);
+            jQuery(innerDocument).find("form").css("background-color", "#ff3545");
+
+          }
+      }
+    , 2000);
+
+  </script>
+{% endcomment %}
+
+
+<style>
+  .main-footer {
+  	display: none !important;
+  }
+</style>

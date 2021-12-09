@@ -1,0 +1,347 @@
+{% if section.settings.enable and section.blocks.size > 0 %}
+
+  {% if section.settings.custom_class and section.settings.custom_class != blank %}
+    {% assign custom_class = section.settings.custom_class %}
+  {% else %}
+    {% assign custom_class = "fc_def_class" %}
+  {% endif %}
+
+  <div class="fc-fb-slideshow-wrapper {{ custom_class }}">
+
+    <div class="fc-slideshow" data-height="{{ section.settings.height }}" data-width="{{ section.settings.width }}" data-mob-min-height="{{ section.settings.mob_min_height }}">
+
+      <div id="fc-slide-0" class="fc-slide active"></div>
+
+      {% for block in section.blocks %}
+      
+        {% if forloop.index == 1 %}
+        	{% assign active = "active" %}
+        {% else %}
+        	{% assign active = "" %}
+        {% endif %}
+      
+        <div id="fc-slide-{{ forloop.index }}" data-slide="{{ forloop.index }}" class="fc-slide {{ active }}" style="background-color: {{ block.settings.bg_color }};" >
+
+        {% assign has_content = true %}
+        {% if
+          block.settings.title == blank and
+          block.settings.subtitle == blank and
+          block.settings.cta == blank and
+          block.settings.custom_html == blank and
+          block.settings.button == blank %}
+          {% assign has_content = false %}
+        {% endif %}
+        
+          <div 
+            class="fc-slide-text-img-outer">
+          <div 
+            class="fc-slide-text-img-container">
+
+            {% if has_content %}
+              <div class="fc-slide-text  {{ block.settings.alignment }} {{ block.settings.text_style }}">
+                <div class="fc-slide-text-inner ta-{{ block.settings.text_alignment }}">
+                  {% if block.settings.title != blank %}
+                    <h3 class="module-title">{{ block.settings.title }}</h3>
+                  {% endif %}
+
+                  {% if block.settings.subtitle != blank %}
+                    <h3>{{ block.settings.subtitle | escape }}</h3>
+                  {% endif %}
+                  
+                  {% if block.settings.custom_html != blank %}
+                    {{ block.settings.custom_html }}
+                  {% endif %}
+
+                  {% if block.settings.cta != blank and block.settings.url != blank %}
+                  	<a href="{{ block.settings.url }}" target="_blank">
+                      {% if block.settings.image1 and block.settings.image1 != blank %}
+                    	<img class="fc-img-slider" alt="{{block.settings.cta}}" src="{{block.settings.image1 | img_url: 'x50'}}">
+					  {% else %}
+                        <span>{{ block.settings.cta | escape }}</span>
+                      {% endif %}
+                    </a>
+                  {% endif %}
+                  
+                  {% if block.settings.cta2 != blank and block.settings.url2 != blank %}
+                  	<a href="{{ block.settings.url2 }}" target="_blank">
+                      {% if block.settings.image2 and block.settings.image2 != blank %}
+                    	<img class="fc-img-slider" alt="{{block.settings.cta2}}" src="{{block.settings.image2 | img_url: 'x50'}}">
+					  {% else %}
+                        <span>{{ block.settings.cta2 | escape }}</span>
+                      {% endif %}
+                    </a>
+                  {% endif %}
+              
+                  
+                </div>
+              </div>
+            {% endif %}                
+                
+          </div>
+          </div>
+            
+      	</div>
+      {% endfor %}
+      
+      {% if section.blocks.size > 1 %}
+      <a class="fc-nav fc-lla" href="javascript:fc_slideshow_change('{{ custom_class }}', -1);"></a>
+      <a class="fc-nav fc-lra" href="javascript:fc_slideshow_change('{{ custom_class }}', 1);"></a>
+	  {% endif %}      
+    </div>
+  </div>
+
+
+	<style>
+      .{{ custom_class }}.fc-fb-slideshow-wrapper {
+      	min-height: 104px;
+        color: white;
+      }
+      .{{ custom_class }}.fc-fb-slideshow-wrapper #fc-slide-1 a.button {
+        display: none;
+      }
+      @media screen and (max-width: 768px) {
+        .{{ custom_class }}.fc-fb-slideshow-wrapper {
+          min-height: 240px;
+          background-color: #eee;
+          color: #444;
+          border-top: 8px solid #ff3555;
+        } 
+	    .{{ custom_class }}.fc-fb-slideshow-wrapper #fc-slide-1 {
+      		background-color: #eee !important;
+      	}
+      	.{{ custom_class }}.fc-fb-slideshow-wrapper #fc-slide-1 a.button {
+        	display: inline-block;
+          	margin-bottom: 24px;
+          	margin-top: -8px;
+        }
+      }
+	</style>
+
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "Responsive Slideshow",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable",
+      "label": "Enable",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "custom_class",
+      "label": "Custom Class"
+    },
+    {
+      "type": "text",
+      "id": "height",
+      "label": "Height",
+	  "info": "Change this if imgs differ from 1980x820",
+	  "default": "820"
+    },
+    {
+      "type": "text",
+      "id": "width",
+      "label": "Width",
+	  "info": "Change this if imgs differ from 1980x820",
+	  "default": "1980"
+    },
+    {
+      "type": "text",
+      "id": "mob_min_height",
+      "label": "Mob Min Height",
+	  "info": "The min height to show all the text in each slide",
+	  "default": "560"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "full-width",
+          "label": "Full width"
+        },
+        {
+          "value": "full-window",
+          "label": "Full window"
+        }
+      ],
+      "default": "full-width",
+      "info": "[Style examples](https:\/\/www.pixelunion.net\/wp-content\/uploads\/2015\/11\/slideshowLayouts.png)"
+    },
+    {
+      "type": "select",
+      "id": "transition",
+      "label": "Transition",
+      "options": [
+        {
+          "value": "transition-slide",
+          "label": "Slide"
+        },
+        {
+          "value": "transition-fade",
+          "label": "Fade"
+        }
+      ],
+      "default": "transition-fade"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Auto rotate between slides",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Block alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "select",
+          "id": "text_alignment",
+          "label": "Text alignment in block",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "select",
+          "id": "text_style",
+          "label": "Text style",
+          "options": [
+            {
+              "value": "light",
+              "label": "Light"
+            },
+            {
+              "value": "dark",
+              "label": "Dark"
+            }
+          ],
+          "default": "light"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background Color"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Slideshow"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subheading",
+          "default": "Introduce customers to your shop with lifestyle imagery and product photography."
+        },
+        {
+          "type": "text",
+          "id": "custom_html",
+          "label": "Html",
+		  "default": "<div>custom html</div>"
+        },
+        {
+          "type": "text",
+          "id": "cta",
+          "label": "Button text"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        },
+		{
+          "type": "text",
+          "id": "btn_class",
+          "label": "Button Class"
+        },
+        {
+          "type": "image_picker",
+          "id": "image1",
+          "label": "Image"
+        },
+		 {
+          "type": "text",
+          "id": "cta2",
+          "label": "Button text"
+        },
+        {
+          "type": "url",
+          "id": "url2",
+          "label": "Link"
+        },
+		{
+          "type": "image_picker",
+          "id": "image2",
+          "label": "Image"
+        },
+		{
+          "type": "text",
+          "id": "btn_class2",
+          "label": "Button Class 2"
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "slide",
+        "settings": {
+          "title": "Slideshow",
+          "subtitle": "Introduce customers to your shop with lifestyle imagery and product photography."
+        }
+      },
+      {
+        "type": "slide",
+        "settings": {
+          "title": "Slideshow",
+          "subtitle": "Introduce customers to your shop with lifestyle imagery and product photography."
+        }
+      }
+    ]
+  }
+}
+
+{% endschema %}

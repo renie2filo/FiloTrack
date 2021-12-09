@@ -1,0 +1,44 @@
+
+{% comment %}
+<div class="module-wrapper">
+  <div class="module module-default-page">
+    <div class="module-header page-header">
+      <div class="module-title page-title">
+        <h1>{{ page.title }}</h1>
+      </div>
+    </div>
+    {% unless page.content == blank %}
+      <div class="module-body page-body rte">
+        {{ page.content }}
+      </div>
+    {% endunless %}
+  </div>
+</div>
+{% endcomment %}
+
+<div class="fc-js-trigger">
+
+  {% section 'corporate-gifts-alternate-top' %}
+
+  {% section 'featured-on' %}
+  
+  {% section 'corporate-gifts-text-column-1' %}
+  
+  {% section 'corporate-gifts-bg_mob_img-1' %}
+
+  {% section 'corporate-text-col-icons' %}
+
+  {% section 'corporate-gifts-bg_mob_img-2' %}  
+
+  {% section 'corporate-third-slideshow' %}
+
+  <div id="askforaquoteform">
+    <div class="bablic-hide-it">
+  		{% section 'corporate-module-contact-form' %}
+    </div>
+    <div class="bablic-hide-en">
+  		{% section 'corporate-module-contact-form-ita' %}
+    </div>
+  </div>
+  
+</div>

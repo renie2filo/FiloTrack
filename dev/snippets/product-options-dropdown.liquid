@@ -1,0 +1,246 @@
+{% if page.url == '/pages/keyfinder' or
+      page.url == '/pages/key-finder-new' or
+      page.url == '/pages/wallet-finder' or
+      page.url == '/pages/luggage-finder'
+%}
+  {% assign is_use_case_page = true %}
+{% endif %}
+
+{% if is_use_case_page %}
+  {% assign collection = collections['all'] %}
+  {% for product_in_loop in collection.products %}
+    <script>console.log('ffss>> {{ product_in_loop | json }}')</script>
+    {% if product_in_loop.id == 25090097163 %}
+      {% assign product = product_in_loop %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+
+{% unless product.options.size == 1 and product.variants[0].title == 'Default Title' %}
+  {% for option in product.options_with_values %}
+    {% assign option_index = forloop.index0 %}
+    {%- capture option_id -%}
+      single-option-{{ form_id }}-{{ option_index }}
+    {%- endcapture -%}
+
+    {% comment %}
+    	[FB] handle: full select when javascript is disabled
+	    {{ option | json }} 
+    {% endcomment %} 
+
+    <div class="fc-selector-wrapper {{option.name}} js-required">
+   
+	{% if option.name == 'Quantity' %}      
+        <div class="select-wrapper fc-quantity-option-selector fc-hide-i">
+          <label
+            class="selected-text"
+            for="{{ option_id }}"
+            data-select-text>
+            <strong>{{ option.name }}:</strong> <span data-selected-option></span>
+          </label> 
+          <select
+            class="single-option-selector"
+            id="{{ option_id }}"
+            data-option-select="{{ form_id }}"
+            data-option-index="{{ option_index }}">
+            {% for value in option.values %}
+              <option
+                value="{{ value | escape }}"
+                {% if option.selected_value == value %}selected="selected"{% endif %}>
+                {{ value }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div>
+          <div class="fc-quantity-option-selector" select_id="{{ option_id }}">
+            {% for value in option.values %}
+            <div class="fc-quantity-option 
+             {% for variant in product.variants %}
+                {% if variant.option1 == value %}
+              		{% assign variant_ = variant %}
+              	{% endif %}
+             {% endfor %}
+             {% if option.selected_value == value %}fc-selected{% endif %}" fc-data-val="{{value}}"
+                 fc-data-variant-id="{{ variant_.id }}" fc-data-variant-name="{{ variant_.title }}">
+              <div class="fc-quantity-option-inner fc-bg-white fc-ph-16 fc-pv-8">
+              <div class="fc-fs-r24">
+                <span><span class="fc-pack-num fc-emph3"></span> x <span class="fc-product-name"></span></span>
+                <span style="float: right;" class="fc-price fc-emph2">{{ variant_.price | money }}</span>
+              </div>
+              <div class="fc-mv-8">
+                <span class="fc-enhance fc-pv-8">in single packs</span>
+                <!--<span class="fc-save-and-price" style="float: right;">
+                    <span class="fc-price-old fc-fs-r16">
+                          {% if variant_.compare_at_price > variant_.price %}{{ variant_.compare_at_price | money }}{% endif %}
+                    </span>&nbsp;
+                    <span class="fc-save-desc fc-fs-r16 fc-emph3"></span>
+                  
+                </span>-->
+              </div>
+            </div>
+            </div>
+            {% endfor %}
+            <script>
+              const variantInfo =  {{ product.variants | json }}
+          
+            
+                function fc_populate_product_variants() {
+                  for (var i in variantInfo) {
+                        const var_id = variantInfo[i].id
+                        const el = $(".fc-quantity-option[fc-data-variant-id=" + var_id + "]")
+                        if (el.length > 0) {
+                          var v = variantInfo[i].option1;
+                          var p = 'Filo';
+                          /* Get the number */
+                          var n = v.split('x ')[0];
+                          /* Get the description */
+                          var d = "";	
+                          if (v.indexOf('ilo Tag') > -1) {
+                              p = v.split('x ')[1]
+                              d = "";
+                            if (n == 1) {
+                              d = "Save €5";
+                            } else if (n == 2) {
+                              d = "Save €5"; 
+                            } else if (n == 4) {
+                              d = "Save €55"; 
+                            } else if (n == 8) {
+                              d = "Save €10"; 
+                            } 
+                          } 
+                          el.find('.fc-pack-num').append(n);
+                          el.find('.fc-save-desc').append(d);
+                          el.find('.fc-product-name').append(p);
+
+                          el.find('.fc-enhance').empty();	
+                          var singlepack = n > 1 ? '<span class="fc-emph3 fc-fs-r16">in ' + n + ' single packs</span>' : '&nbsp;';
+
+                          singlepack = $(window).width() >= 400 ? singlepack : "&nbsp;";
+                          el.find('.fc-enhance').append(singlepack);
+                        }
+                    }               
+                }
+                fc_populate_product_variants()
+              </script>
+          </div>
+                    
+          <script>
+            $(".fc-quantity-option").unbind().bind("click", function() {
+              fc_quantity_option_selected(this);
+            });
+          </script>
+        </div>
+	{% elsif option.name == 'Color' %}      
+      <div class="select-wrapper fc-color-option-selector fc-hide-i">
+        <label
+               class="selected-text"
+               for="{{ option_id }}"
+               data-select-text>
+          <strong>{{ option.name }}:</strong> <span data-selected-option></span>
+        </label> 
+        <select
+                class="single-option-selector"
+                id="{{ option_id }}"
+                data-option-select="{{ form_id }}"
+                data-option-index="{{ option_index }}">
+          {% for value in option.values %}
+          <option
+                  value="{{ value | escape }}"
+                  {% if option.selected_value == value %}selected="selected"{% endif %}>
+            {{ value }}
+          </option>
+          {% endfor %}
+        </select>  
+      </div>
+
+      <div class="fc-color-par-wrap fc-mv-24">
+        <div class="fc-mv-8 fc-fs-r24">
+        	Choose a color or a mix
+        </div>
+        <div class="fc-mv-8 fc-color-option-selector" select_id="{{ option_id }}">
+          {% for value in option.values %}          
+            <div class="fc-color-option 
+              {% if option.selected_value == value %}fc-selected{% endif %}
+              {% if
+                value == "red + cyan"%}fc-mix8 
+              {% endif %}
+              {% if
+                value == "black + white" or
+                value == "black + red" or
+                value == "red + black" or
+                value == "cyan + red"  or
+                value == "red + cyan"%}fc-mix2 
+              {% endif %}
+              {% if
+                value == "all colors" or 
+                value == "white" or 
+                value == "black" or 
+                value == "red" %}fc-mix4 
+              {% endif %}
+              {% if
+                value == "black" or 
+                value == "white" or 
+                value == "cyan" or 
+                value == "red" %}fc-single
+              {% endif %} 
+              {{value}}
+              {% assign color_ = value | replace: ' + ', '_'  | replace: ' ', '_' %}"
+              fc-data-val="{{value}}">
+	             <div class="fc-color-visual" style="background-image:url('//cdn.shopify.com/s/files/1/2199/1049/files/ft_{{ color_ }}.png')"></div>
+            </div>
+          {% endfor %}
+        </div>
+        <script>
+          $(".fc-color-option").unbind().bind("click", function() {
+            fc_color_option_selected(this);
+          });
+        </script>
+      </div>
+	{% else %}
+      <div class="select-wrapper">
+        <label
+               class="selected-text"
+               for="{{ option_id }}"
+               data-select-text>
+          <strong>{{ option.name }}:</strong> <span data-selected-option></span>
+        </label>
+
+        {% comment %}
+        	[FB] handle: full select when javascript is disabled
+        {% endcomment %}
+
+        <select
+                class="single-option-selector"
+                id="{{ option_id }}"
+                data-option-select="{{ form_id }}"
+                data-option-index="{{ option_index }}">
+          {% for value in option.values %}
+          <option
+                  value="{{ value | escape }}"
+                  {% if option.selected_value == value %}selected="selected"{% endif %}>
+            {{ value }}
+          </option>
+          {% endfor %}
+        </select>
+      </div>      
+	{% endif %}
+    </div>
+  {% endfor %}
+
+
+{% if template != 'product.filotag'%}
+{% comment %}After some restyling (2018/05 - the thumbnails in mobile for filotag is always shown --> there is no need for the script that shows it){% endcomment %}
+<script>
+  $(window).on("load", function() {
+    if ($(window).width() > 720) {
+      $("div.product-slideshow-pagination.product-thumbnails").show();
+    }
+  });
+</script>
+{% endif %}
+
+
+{% endunless %}

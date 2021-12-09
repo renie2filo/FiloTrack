@@ -1,0 +1,249 @@
+	<div id="fc-outer1">
+			
+		<!--<p id="start">A short time ago in a browser very, very close&hellip;</p>
+		<h1>STAR WARS<sub>titles in CSS3</sub></h1>-->
+
+		<div class="email-blur"></div>
+		<div class="email-container">
+			<input placeholder="Email" value="" id="fc_email">
+			<a href="javascript:xwing()" title="" alt="">
+				<img src="https://cdn.shopify.com/s/files/1/2199/1049/files/xwing_h.png?1508281575730866380">
+				<img class="blur" src="https://cdn.shopify.com/s/files/1/2199/1049/files/xwing_h.png?1508281575730866380">
+			</a>
+		</div>
+		<script>
+		function send() {
+			var apiUrl = "http://account.api-us1.com"; // get this from settings
+			var apiString = apiUrl + "/admin/api.php";
+			var apiKey = ""; // WARNING! probably want to keep this off of client-side calls!
+
+			var contact = {
+			  "api_action": "contact_sync",
+			  "api_key": apiKey,
+			  "email": "test@example.com",
+			  "first_name": "Test", // optional
+			  "last_name": "User" // optional
+			  //  additional fields from http://www.activecampaign.com/api/example.php?call=contact_sync
+			};
+
+			$.post(apiString, contact, (response) => {
+			  console.log("Response: ", response);
+			});
+		}
+		</script>
+
+		<div id="titles">
+			<div id="titlecontent">
+
+				<p class="center">Episodio VII</p>
+				
+				<p class="center">FILO: I DROIDI CHE STATE CERCANDO</p>
+
+				<p>Perdere gli oggetti può farci arrabbiare.
+                  
+                  
+                  
+                  <!---a a a a a a a a a d  ff f f f f f f f   --->
+                  
+                  
+                  
+                  
+                  
+                  E l'ira è la via per il Lato Oscuro.</p>
+				
+				<p>Da oggi hai dei potenti alleati per non                   perdere più gli oggetti importanti per te.</p>
+				
+				<p>FILO: i droidi che state cercando.</p>
+								
+				<p>L'edizione speciale FILO - Star Wars è stata lanciata in esclusiva al Romics 2017.</p>
+
+				<p>Inserisci la tua email e prova a vincere un FILO...</p>
+
+			</div>
+		</div>
+	</div>
+
+{% comment %}
+
+	Input
+
+{% endcomment %}{% capture _content %}{{ <div><script> console.log("culo"); </script> <script> console.log("ciao");           console.log("xddddddddx");
+
+
+
+
+
+
+
+
+console.log("end"); </script>
+</div>
+}}{% endcapture %}{% comment %}
+
+	Remove redundant closing tags
+
+{% endcomment %}{% assign _endings = "html head body li dt dd p rt rp optgroup option colgroup caption thead tbody tfoot tr td th" | split: " " %}{% for _element in _endings %}
+	{% capture _end %}</{{ _element }}>{% endcapture %}
+	{% assign _content = _content | remove: _end %}
+{% endfor %}{% comment %}
+
+	Create a variable to match newlines
+
+{% endcomment %}{% capture nl %}
+{% endcapture %}{% comment %}
+
+	Prepare inline <script>'s for compression
+		- We have to ensure a space after every </script> otherwise Liquid won't match, and blow up everything if two elements comes straight after eachother: <script></script><div></div>
+
+{% endcomment %}{% assign _content = _content | replace: '</script>', '</script><!-- [SPACE] -->' | replace: '<!-- [SPACE] -->', " " %}{% assign _script_befores = _content | split: "<script" %}{% assign _content = "" %}{% for _script_before in _script_befores %}
+	{% assign _scripts = _script_before | split: "</script>" %}
+    {% case _scripts.size %}
+    {% when 2 %}
+		{% assign _script = _scripts.first |
+
+			replace: "// //", "/*[COMMENT]*/ " |
+			replace: "//	//", "/*[COMMENT]*/ " |
+			replace: "// ", "/*[COMMENT]*/ " |
+			replace: " //", "/*[COMMENT]*/ " |
+			replace: "  	//", "/*[COMMENT]*/ " |
+			replace: "//	", "/*[COMMENT]*/ " |
+			replace: "//<![CDATA[", "/*[COMMENT]*/ " |
+			replace: "//]]>", "/*[COMMENT]*/ " |
+
+		%}
+
+		{% assign _script_comment_befores = _script | split: "/*[COMMENT]*/ " %}{% for _script_comment_before in _script_comment_befores %}
+			{% assign _script_comment_content = _script_comment_before | split: nl | first %}
+			{% if _script_comment_content %}
+				{% capture _script_comment %}{{ "/*[COMMENT]*/ " }}{{ _script_comment_content }}{{ nl }}{% endcapture %}
+				{% assign _script = _script | remove: _script_comment  %}
+			{% endif %}
+		{% endfor %}
+		{% assign _script_comment_befores = _script | split: "/*" %}{% for _script_comment_before in _script_comment_befores %}
+			{% assign _script_comment_content = _script_comment_before | split: "*/" | first %}
+			{% if _script_comment_content %}
+				{% capture _script_comment %}{{ "/*" }}{{ _script_comment_content }}{{ "*/" }}{% endcapture %}
+				{% assign _script = _script | remove: _script_comment  %}
+			{% endif %}
+		{% endfor %}
+
+		{% capture _content %}{{ _content }}<script {{ _script }}</script>{{ _scripts.last }}{% endcapture %}
+    {% when 1 %}
+		{% capture _content %}{{ _content }}{{ _scripts.last }}{% endcapture %}
+    {% endcase %}
+{% endfor %}{% comment %}
+
+	Cleanup
+		- There is an 'missing semicolon' issue with Shopify's Enhanced Ecommerce for Google Analytics, which gets corrected here as well.
+		- There is an 'missing semicolon' issue with Shopify's inline Admin Panel script, which gets corrected here as well.
+
+{% endcomment %}{% assign _content = _content | replace: '<script >', '<script>' | replace: '<script  ', '<script ' | replace: 'analytics.onload = onload', ';analytics.onload = onload' | replace: 'analytics.async = true;', ';analytics.async = true;' | replace: 'if (window.addEventListener){ addEventListener("message", ', ';if (window.addEventListener){ addEventListener("message", ' %}{% comment %}
+
+	Compress whitespace outside of <pre>
+		- We have to ensure a space after every </pre> otherwise Liquid won't match, and blow up everything if two elements comes straight after eachother: <pre></pre><div></div>
+
+{% endcomment %}{% assign _content = _content | replace: '</pre>', '</pre><!-- [SPACE] -->' | replace: '<!-- [SPACE] -->', " " %}{% assign _pre_befores = _content | split: "<pre" %}{% assign _content = "" %}{% for _pre_before in _pre_befores %}
+  {% assign _pres = _pre_before | split: "</pre>" %}
+    {% case _pres.size %}
+    {% when 2 %}
+      {% capture _content %}{{ _content }}<pre{{ _pres.first }}</pre>{{ _pres.last | split: " " | join: " " }}{% endcapture %}
+    {% when 1 %}
+      {% capture _content %}{{ _content }}{{ _pres.last | split: " " | join: " " }}{% endcapture %}
+    {% endcase %}
+{% endfor %}{% comment %}
+
+	Remove html comments
+		- Matching just "<!--" and "-->" will whipe out IE Conditional Comments, which you probably don't want
+
+{% endcomment %}{% assign _comment_befores = _content | split: "<!-- " %}{% for _comment_before in _comment_befores %}
+	{% assign _comment_content = _comment_before | split: " -->" | first %}
+	{% if _comment_content %}
+		{% capture _comment %}{{ "<!-- " }}{{ _comment_content }}{{ " -->" }}{% endcapture %}
+		{% assign _content = _content | remove: _comment %}
+	{% endif %}
+{% endfor %}{% comment %}
+
+	Clip whitespace around elements
+
+{% endcomment %}{% assign _clippings = "html head title base link meta style body article section nav aside h1 h2 h3 h4 h5 h6 hgroup header footer address p hr blockquote ol ul li dl dt dd figure figcaption main div table caption colgroup col tbody thead tfoot tr td th option img script" | split: " " %}{% for _element in _clippings %}
+	{% assign _edges = " <e;<e; </e>;</e>;</e> ;</e>" | replace: "e", _element | split: ";" %}
+	{% assign _content = _content | replace: _edges[0], _edges[1] | replace: _edges[2], _edges[3] | replace: _edges[4], _edges[5] %}
+{% endfor %}{% comment %}
+
+	Output
+
+{% endcomment %}{{ _content }}
+
+
+{% if template contains 'jediQuery' %}
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>jediQuery</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2.0">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+	<script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+	<script>
+		// Initialize Firebase
+		var config = {
+			apiKey: "AIzaSyBp19Y4vTBFUCGbTkAbuypNTj17_t8PaAg",
+			authDomain: "jediquery.firebaseapp.com",
+			databaseURL: "https://jediquery.firebaseio.com",
+			projectId: "jediquery",
+			storageBucket: "",
+			messagingSenderId: "425430991262"
+		};
+		firebase.initializeApp(config);
+
+		var database = firebase.database();
+
+		var ref = database.ref('subscribers');
+
+		function validateEmail(email) {
+			console.log("validating " + email);
+		    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		    return re.test(email);
+		}
+
+		function remove_wrong_email_class() {
+			$("#fc-outer1 .email-blur").removeClass("wrong");
+		}
+		function add_wrong_email_class() {
+			$("#fc-outer1 .email-blur").addClass("wrong");
+		}
+		function add_right_email_class() {
+			$("#fc-outer1 .email-blur").addClass("right");
+			$("#fc-outer1 input#fc_email").attr("disabled", "disabled");
+          	$('#titlecontent').empty().append(
+              '<p class="center">Episodio VII</p><p class="center">LA FORZA É POTENTE</p>' +
+              '<p>Sono ' + $("#fc-outer1 input#fc_email").val() +
+              ' cavaliere Jedi e amico del comandante Han Solo. So che sei potente, poderoso Jabba, e che la tua collera verso Han Solo deve essere ugualmente poderosa.' +
+              'Quale segno di buona forza, voglio provare a vincere un regalo: uno di questi tre droidi.</p>');
+		}
+
+		function xwing() {
+				var em = $("#fc_email").val();
+				if (validateEmail(em)) {
+					subscribe(em);
+					setTimeout( add_right_email_class, 10);
+				} else {
+					setTimeout( add_wrong_email_class, 10);
+					setTimeout( remove_wrong_email_class, 1200);
+				}
+		}
+
+      	function subscribe(em) {
+			var ts = Date.now();
+			ref.child("users").push({ email: em, timestamp: ts });
+		}
+      
+	</script>
+
+{% endif %}
+
+

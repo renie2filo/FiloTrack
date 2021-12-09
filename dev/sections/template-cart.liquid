@@ -1,0 +1,578 @@
+{% assign tata_cart = false %}
+{% assign tata_class = "" %}
+{% for item in cart.items %}
+  {% if item.product.title contains "tata" or
+        item.product.title contains "Tata" %}
+      {% assign tata_cart = true %}
+      {% assign tata_class = "fc-tata" %}
+  {% endif %}
+{% endfor %}
+
+<div class="module-wrapper {{tata_class}}">
+  <div class="module cart">
+    <div class="module-header cart-header">
+      <h1 class="module-title">Your Shopping Cart</h1>
+      {% if tata_cart %}
+        {% comment %}
+        <p>
+          Sei stato reindirizzato su www.filotrack.com 
+          in quanto Tata è un prodotto di Filo
+        </p>
+        <p>
+          Con questo ordine ti assicuri di ricevere Tata Pad per primo, a partire dal 7 Gennaio.<span class="fc-md-up-br"></span>Una volta che effettuerai l'ordine, ti aggiorneremo via mail sui tempi di consegna. In qualunque momento potrai annullare il tuo ordine.
+        </p>
+        {% endcomment %}
+        <p>
+          Tata is a product made by Filo,
+          so you have been redirect on www.filotrack.com 
+        </p>
+      {% endif %}
+    </div>
+    <div class="module-body">
+      <div class="module-content">
+        {% if cart.item_count > 0 %}
+          <script>
+            $.post(
+                "https://us-central1-filotrack-analytics.cloudfunctions.net/fc_cart_creation",
+                {
+                  uid:get_uid_or_random(),
+                  date:Date.now(),
+                  current_url:window.location.pathname
+                }, 
+                function(returnedData){
+                }
+              );
+          </script>
+          <form action="/cart" method="post">
+            <div class="cart-items-container">
+              <table class="cart-items clean">
+                <thead class="cart-items-thead">
+                  <tr>
+                    <th class="first">Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th class="last">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for item in cart.items %}
+
+                    {% assign tata_item_cart = false %}
+                    {% assign tata_item_class = "" %}
+                    {% assign item_url = item.url %}
+                    {% if item.product.title contains "tata" or
+                          item.product.title contains "Tata" %}
+                        {% assign tata_item_cart = true %}
+                        {% assign tata_item_class = "fc-tata-item" %}
+                        {% assign tata_item_url = "tata-pad/" %}
+                        {% if item.product.title contains "band" or
+                              item.product.title contains "Band"
+                        %}
+                          {% assign tata_item_url = "tata-pad/" %}
+                        {% endif %}
+                        {% assign item_url = "https://getmytata.com/tata-pad" %}
+                    {% endif %}
+                    <tr
+                      class="cart-item variant-{{ item.variant.id }} {{tata_item_class}} {% include 'for-looper' %}"
+                      data-variant="{{ item.variant.id }}"
+                      data-variant-id="{{ item.variant.id }}"
+                      data-title="{{ item.product.title }}"
+                      data-url="{{ item_url }}">
+                      <td class="cart-item-product cart-item-td">
+                        <div class="cart-item-image-container">
+                          <a class="cart-image" href="{{ item_url }}">
+                            <img src="{{ item | img_url: 'small' }}" alt="{{ item.product.title }}">
+                          </a>
+                          <a class="cart-item-remove mobile-only" href="/cart/change?line={{ forloop.index }}&amp;quantity=0">
+                            <span class="icon icon-cross"></span>
+                          </a>
+                        </div>
+                        <div class="cart-item-product-wrap">
+                          <span class="cart-title"><a href="{{ item_url }}">{{ item.product.title }}</a></span>
+                          {% comment %}
+                            <span class="cart-vendor vendor">{{ item.vendor }}</span>
+                          {% endcomment %}
+                          {% unless item.variant.title == 'Default Title' %}
+                            <span class="cart-variant">{{ item.variant.title }}</span>
+                          {% endunless %}
+                        </div>
+                      </td>
+                      <td class="cart-item-price cart-item-td">
+                        <div class="cart-item-unit-price">
+                          <span class="mobile-only">{{ 'general.general.price' | t }}:</span>
+                          <span class="money">{{ item.price | money }}</span>
+                        </div>
+                      </td>
+                      {% unless item.variant.inventory_management == blank or item.variant.inventory_policy == 'continue' %}
+                        {% assign inventory = true %}
+                      {% endunless %}
+                      <td class="cart-item-quantity cart-item-td" {% if inventory == true %}data-max="{{ item.variant.inventory_quantity }}"{% endif %}>
+                        <div class="number-input-wrapper cart-item-quantity-wrapper clearfix">
+                          <div class="number-input-field">
+                            <input
+                            type="number" id="cart-item-{{ item.id }}" name="updates[]" class="cart-item-quantity-display" value="{{ item.quantity }}" size="1"  aria-label="{{ "general.general.quantity" | t }}" />
+                            <label class="number-input-label" for="cart-item-{{ item.id }}">{{ 'general.general.quantity' | t }}</label>
+                          </div>
+                          <div class="number-input-nav">
+                            <div class="number-input-nav-item icon icon-plus cart-item-increase"></div>
+                            <div class="number-input-nav-item icon icon-minus cart-item-decrease"></div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="cart-item-total cart-item-td">
+                        <div class="cart-item-total-container">
+                          <span class="mobile-only">{{ 'general.general.total' | t }}:</span>
+                          <span class="money">{{ item.quantity | times: item.price | money }}</span>
+                          <a class="cart-item-remove" href="/cart/change?line={{ forloop.index }}&amp;quantity=0">
+                            <span class="icon icon-cross"></span>
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            <div class="cart-tools">
+              <div class="cart-totals">
+                <div class="cart-cta">
+                  <div class="cart-price-info">
+                    <p class="sub-total">Subtotal</p>
+                    <p class="cart-price"><span class="money total-recap__final-price" data-checkout-payment-due-target={{cart.total_price}}>{{ cart.total_price | money }}</span></p>
+                    <p class="cart-message meta">{{ 'cart.general.tax_and_shipping' | t }}</p>
+                    {% if settings.show-currency-switcher %}
+                      <p class="cart-currency-note meta">{{ 'cart.general.currency_note_html' | t: currency: shop.currency }}</p>
+                    {% endif %}
+                  </div>
+                  <div class="fc-button-row fc-pv-32" style="overflow: hidden;">
+                    <div class="fc_billing_company_checkbox" style="display:inline; float: left">
+                      <p class="cart-attribute__field fc_animated_checkbox">
+                        <input type="hidden" name="attributes[Invoice requested]" value="No">
+                        <input class="fc_invoice_requested_checkbox check" onchange="fc_invoice_requested_changed(this)" type="checkbox" name="attributes[Invoice requested]" value="Yes" {% if cart.attributes["Invoice requested"] == "Yes" %}checked{% endif %} id="check"/>
+                        <label for="check">
+                          <svg viewBox="0,0,50,50">
+                            <path d="M5 30 L 20 45 L 45 5"></path>
+                          </svg>
+                        </label>
+                        <label for="check">
+                          &nbsp;Bill my company
+                          <!--{% if tata_cart == true %}*{% endif %}-->
+                        </label>
+                      </p>
+                    </div>
+                    <div style="display:inline; float: right">
+                      <input type="submit" name="update" value="Update" class="button outline cart-button cart-update-button">
+                      <input id="checkout-button" type="submit" name="checkout" value="Checkout" class="button secondary inverse cart-button">
+                      {% if additional_checkout_buttons %}
+                        <div class="cart-additional-checkout-buttons">
+                          <style>
+                            .fc_invoice_requested_checkbox {
+                              height: 24px;
+                              width: 24px;
+                              border-radius: 50%;
+                            }
+                            .fc_billing_company_checkbox p {
+                              padding: 8px 0;
+                            }
+                            .fc_invoice_type_target p {
+                              padding: 16px 0 0 0;
+                            }
+                            @media screen and (max-width: 576px) {
+                              .fc_billing_company_checkbox {
+                                display: block !important;
+                                float: unset !important;
+                                text-align: center !important;
+                                padding: 8px 0;
+                              }
+                              .cart-additional-checkout-buttons .additional-checkout-button {
+                                min-width: 220px !important;
+                              }
+                            }
+                          </style>
+                          {{ content_for_additional_checkout_buttons }}
+                        </div>
+                      {% endif %}
+                    </div>
+                  </div>
+
+                  
+                  <!--{% if tata_cart == true %}
+                    <p class="fc-fs-16 fc-mb-0 fc-mt-0 fc-ta-l">
+                      * Upon order completion, you will receive an order confirmation. That is all you need to request tax incentives for Tata Pad.
+                    </p>
+                  {% endif %}-->
+
+                  <div>
+                    <div>
+                      {% comment %}
+                      <span class="cart-attribute__field">
+                        <input type="hidden" name="attributes[Request invoice]" value="No">
+                        <input type="checkbox" name="attributes[Request invoice]" value="Yes"{% if cart.attributes["Request invoice"] == "Yes" %} checked{% endif %}>
+                        <label>Request invoice</label>
+                      </span>
+                      <span class="cart-attribute__field">
+                        <input type="hidden" name="attributes[Request invoice]" value="No">
+                        <input type="checkbox" name="attributes[Request invoice]" value="Yes"{% if cart.attributes["Request invoice"] == "Yes" %} checked{% endif %}>
+                        <label>I do not need an invoice</label>
+                      </span> <!--  autocomplete="billing given-name"  -->
+                      {% endcomment %}
+                      <div class="fc_invoice_type_target fc_invoice_info_target row fc-ta-l">
+                        <div class="fc_invoice_type_select col-md-6"
+                          {% if cart.attributes["Invoice requested"] == "Yes" %}{% else %}
+                            style="display: none"
+                          {% endif %}
+                        >
+                          <p class="cart-attribute__field">  
+
+                            <label for="request-invoice">Billing options</label>              
+                            <select id="request-invoice" name="attributes[Request invoice]" onchange="fc_invoice_request_type_changed(this)">
+
+                              <option disabled="disabled" selected="selected" value="" text="Select an option..." {% if cart.attributes["Request invoice"] == "" %} selected{% endif %}>Select an option...</option>
+
+                              <option value="fc_invoice_physical_person_it"{% if cart.attributes["Request invoice"] == "fc_invoice_physical_person_it" %} selected{% endif %}>Italian physical person</option>
+
+                              <option value="fc_invoice_sole_proprietorship_it"{% if cart.attributes["Request invoice"] == "fc_invoice_sole_proprietorship_it" %} selected{% endif %}>Italian sole proprietorship</option>
+
+                              <option value="fc_invoice_company_it"{% if cart.attributes["Request invoice"] == "fc_invoice_company_it" %} selected{% endif %}>Italian company</option>
+
+                              <option value="fc_invoice_ue"{% if cart.attributes["Request invoice"] == "fc_invoice_ue" %} selected{% endif %}>UE Company</option>
+
+                              <option value="fc_invoice_not_ue" {% if cart.attributes["Request invoice"] == "fc_invoice_not_ue" %} selected{% endif %}>Company out of UE</option>
+                            </select>
+                            <p class="cart-attribute__field" style="display:none; height: 0; font-size:0; width: 0; opacity: 0;">
+                              <input class="fc_uid" name="attributes[fc_uid]" value="{{ cart.attributes["fc_uid"] }}" id="fc_uid" type="text" value="">
+                              <input class="fc_lan" name="attributes[fc_lan]" value="{{ cart.attributes["fc_lan"] }}" id="fc_lan" type="text" value="">
+                              <script>
+                                // $("input#fc_uid").val(get_uid_or_random());
+                                // if (bablic && bablic.getLocale()) {
+                                //   $("input#fc_lan").val(bablic.getLocale());
+                                // }
+                              </script>
+                            </p>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {% if section.settings.order_notes %}
+                    <div class="cart-instructions">
+                      <p>
+                        <label for="cart-notes">Order notes</label>
+                      </p>
+                      <textarea rows="6" name="note" id="cart-notes" placeholder="Add a note">{{ cart.note }}</textarea>
+                    </div>
+                  {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          {% if section.settings.show_shipping_calculator and cart.requires_shipping %}
+            {% include 'shipping-calculator' %}
+          {% endif %}
+        {% else %}
+          <p class="empty">You don't have any items in your cart yet. <a href="{{ shop.url }}/products/filo-tag">Continue shopping.</a></p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="fc_invoice_info_pool fc_hidden_i" style="display: none">
+
+  <div class="fc_invoice_physical_person_it">
+    <div class="col-md-6 fc_invoice_info">
+      <p class="cart-attribute__field">
+        <label for="cod_fisc_it">Codice fiscale</label>
+        <input onkeyup="fc_cod_fisc_keyup(this)" class="cod_fisc" id="cod_fisc_it" type="text" name="attributes[Codice fiscale]" value="{{ cart.attributes["Codice fiscale"] }}">
+      </p>
+    </div>
+    <div class="col-12 fc_invoice_info fc-mt-32">
+      <p class="cart-attribute__field" style="padding:0 0 0 48px;">
+         <i class="ion-ios-information icon-size-2x fc-red fc-filo" aria-hidden="true" title="Ordini promozionali e aziendali" style="position: absolute; top: 50%; left: 16px;transform: translateY(-50%);"></i> Please fill complete name and address in the shipping info (or billing info, if different) ahead in the process.
+      </p>
+    </div>
+  </div>
+
+  <div class="fc_invoice_sole_proprietorship_it">
+    <div class="col-md-6 fc_invoice_info">
+      <p class="cart-attribute__field">
+        <label for="cod_dest_o_pec_it">Codice destinatario or PEC</label>
+        <input onkeyup="fc_cod_dest_o_pec_keyup(this)" class="cod_dest_o_pec" id="cod_dest_o_pec_it" type="text" name="attributes[Codice destinatario o PEC]" value="{{ cart.attributes["Codice destinatario o PEC"] }}">
+      </p>
+    </div>
+    <div class="col-md-6 fc_invoice_info">
+      <p class="cart-attribute__field">
+        <label for="vat_number_it">VAT number</label>
+        <input onkeyup="fc_vat_number_keyup(this)" class="vat_number" id="vat_number_it" type="text" name="attributes[VAT number]" value="{{ cart.attributes["VAT number"] }}">
+      </p>
+    </div>
+    <div class="col-md-6 fc_invoice_info">
+      <p class="cart-attribute__field">
+        <label for="cod_fisc_it">Codice fiscale</label>
+        <input onkeyup="fc_cod_fisc_keyup(this)" class="cod_fisc" id="cod_fisc_it" type="text" name="attributes[Codice fiscale]" value="{{ cart.attributes["Codice fiscale"] }}">
+      </p>
+    </div>
+    <div class="col-12 fc_invoice_info fc-mt-32">
+      <p class="cart-attribute__field" style="padding:0 0 0 48px;">
+         <i class="ion-ios-information icon-size-2x fc-red fc-filo" aria-hidden="true" title="Ordini promozionali e aziendali" style="position: absolute; top: 50%; left: 16px;transform: translateY(-50%);"></i> Please fill complete name and legal address in the shipping info (or billing info, if different) ahead in the process.
+      </p>
+    </div>
+  </div>
+
+  <div class="fc_invoice_company_it">
+    <div class="col-md-6 fc_invoice_info">
+      <p class="cart-attribute__field">
+        <label for="cod_dest_o_pec_it">Codice destinatario or PEC</label>
+        <input onkeyup="fc_cod_dest_o_pec_keyup(this)" class="cod_dest_o_pec" id="cod_dest_o_pec_it" type="text" name="attributes[Codice destinatario o PEC]" value="{{ cart.attributes["Codice destinatario o PEC"] }}">
+      </p>
+    </div>
+    <div class="col-md-6 fc_invoice_info">
+      <p class="cart-attribute__field">
+        <label for="vat_number_it">VAT number</label>
+        <input onkeyup="fc_vat_number_keyup(this)" class="vat_number" id="vat_number_it" type="text" name="attributes[VAT number]" value="{{ cart.attributes["VAT number"] }}">
+      </p>
+    </div>
+    <div class="col-md-6 fc_invoice_info">
+      <p class="cart-attribute__field">
+        <label for="cod_fisc_it">Codice fiscale</label>
+        <input onkeyup="fc_cod_fisc_keyup(this)" class="cod_fisc" id="cod_fisc_it" type="text" name="attributes[Codice fiscale]" value="{{ cart.attributes["Codice fiscale"] }}">
+      </p>
+    </div>
+    <div class="col-12 fc_invoice_info fc-mt-32">
+      <p class="cart-attribute__field" style="padding:0 0 0 48px;">
+        <i class="ion-ios-information icon-size-2x fc-red fc-filo" aria-hidden="true" title="Ordini promozionali e aziendali" style="position: absolute; top: 50%; left: 16px;transform: translateY(-50%);"></i> 
+        Please fill company name and legal address in the shipping info (or billing info, if different) ahead in the process.
+      </p>
+    </div>
+  </div>
+
+  <div class="fc_invoice_ue">
+    <div class="col-md-6 fc_invoice_info">
+      <p class="cart-attribute__field">
+        <label for="vat_number_ue">VAT number</label>
+        <input onkeyup="fc_vat_number_keyup(this)" class="vat_number" id="vat_number_ue" type="text" name="attributes[VAT number]" value="{{ cart.attributes["VAT number"] }}">
+      </p>
+    </div>
+    <div class="col-12 fc_invoice_info fc-mt-32">
+      <p class="cart-attribute__field" style="padding:0 0 0 48px;">
+        <i class="ion-ios-information icon-size-2x fc-red fc-filo" aria-hidden="true" title="Ordini promozionali e aziendali" style="position: absolute; top: 50%; left: 16px;transform: translateY(-50%);"></i> Please fill complete name or company name and legal address in the shipping info (or billing info, if different) ahead in the process.
+      </p>
+    </div>
+  </div>
+
+  <div class="fc_invoice_not_ue">
+    <div class="col-12 fc_invoice_info fc-mt-32">
+      <p class="cart-attribute__field" style="padding:0 0 0 48px;">
+        <i class="ion-ios-information icon-size-2x fc-red fc-filo" aria-hidden="true" title="Ordini promozionali e aziendali" style="position: absolute; top: 50%; left: 16px;transform: translateY(-50%);"></i> You are all set! Please fill complete name or company name and legal address in the shipping info (or billing info, if different) ahead in the process.
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function fc_invoice_requested_changed(checkbox) {
+    if (checkbox.checked) {
+      $(".fc_invoice_type_select").show().find("select").val(
+        $(".fc_invoice_type_select").find("select option:selected").val()
+      ).trigger('change')
+    } else {
+      $(".fc_invoice_type_select").hide().find("select")
+      /*.val($(".fc_invoice_type_select select option:first").val())
+      $(".fc_invoice_type_select").find("select option").removeAttr("selected");
+      $(".fc_invoice_type_select").find("select option:first-of-type").attr("selected", "selected");*/
+      $(".fc_invoice_info_target .fc_invoice_info").remove();
+      // it can be hidden / showed and made required, so that the field would retain info 
+    }
+  }
+  function fc_invoice_request_type_changed(sel) {
+    const sel_value = sel.value;
+    const sel_value_selector = sel_value ? "." + sel_value : ".none";
+    //console.log("SEL VALUE: " + sel_value);
+    $(".fc_invoice_info_target .fc_invoice_info").remove();
+    $(".fc_invoice_info_target").append($("div" + sel_value_selector + " .fc_invoice_info").clone());
+  }
+  $("#request-invoice").change();
+  function fc_vat_number_keyup(inp) {
+    $("input.vat_number").val(inp.value);
+    $("input.cod_fisc").val(inp.value);
+  }
+  function fc_cod_fisc_keyup(inp) {
+    $("input.cod_fisc").val(inp.value);
+  }
+  function fc_cod_dest_o_pec_keyup(inp) {
+    $("input.cod_dest_o_pec").val(inp.value);
+  }
+  function fc_quantity_input_changed() {
+    console.log("FOUND " + $(".button.cart-button.cart-update-button").length);
+    $(".button.cart-button.cart-update-button").click();
+  }
+</script>
+
+<script type="application/json" data-cart-strings>
+  {
+    "notAvailableText": {{ 'cart.general.not_available'| t | json }},
+    "stockLevelText": {{ 'cart.general.stock_level' | t: stock_count: '** stock_count **' | json }},
+    "okayText": {{ 'cart.general.okay' | t | json }}
+  }
+</script>
+{% if tata_cart == true %}
+  <script>
+    console.log("tata present!")
+    $(".footer-wrapper.style-dark.has-borders").empty();
+    $(".branding.alternate-logo-in-drawer.has-logo").empty().append('<a class="branding-logo-link" href="https://getmytata.com"><img class="branding-logo-image logo-regular" alt="Tata" src="https://getmytata.com/wp-content/uploads/2019/03/cropped-tata_logo_color.png" data-header-logo="tata"></a>');
+
+    $(window).load(function() {
+      console.log("changing footer");
+      $(".footer-wrapper.style-dark.has-borders").empty().append(`
+      <div class="fc-section-container">
+        <div class="fc-row fc-logo-and-social">
+          <div class="fc-col">
+            <div class="fc-logo-container">
+              <img width="80" src="https://getmytata.com/wp-content/uploads/2019/03/tata_logo_w.png" class="attachment-large size-large" alt="" srcset="https://getmytata.com/wp-content/uploads/2019/03/tata_logo_w.png 1093w, https://getmytata.com/wp-content/uploads/2019/03/tata_logo_w-750x342.png 750w, https://getmytata.com/wp-content/uploads/2019/03/tata_logo_w-768x351.png 768w" sizes="(max-width: 1093px) 100vw, 1093px"/>
+            </div>
+          </div>
+          <div class="fc-col fc-ta-r">
+            <div class="fc-social-container">
+              <span>Connect with us</span>
+              <span class="fc-fs-32 drawer-social-icons">
+                <a target="_blank" class="drawer-social-icon-facebook" href="https://www.facebook.com/getmytata/">Facebook
+                </a>
+                <a target="_blank" class="drawer-social-icon-twitter" href="https://twitter.com/getmytata">Twitter
+                </a>
+                <a target="_blank" class="drawer-social-icon-instagram" href="https://www.instagram.com/getmytata/">Instagram
+                </a>
+                <a target="_blank" href="mailto:info@filotrack.com">
+                  <img width="28" src="https://getmytata.com/wp-content/uploads/2019/07/email_icon-3.png" alt="email" title="email"/>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="fc-row fc-hr">
+          <div></div>
+        </div>
+        <div class="fc-row fc-privacy">
+          <div class="fc-privacy-container">
+            <div class="elementor-text-editor elementor-clearfix">
+              © 2020 Filo Srl – All rights reserved Filo Srl – Via Marsala 29 H/I, 00185 Rome (RM) – Italy P.IVA/CF:13008741004 – REA: RM – 1417094 – S.C. € 18.178,83​
+            </div>
+          </div>
+        </div>
+      </div>`);
+      $(".header-tools ul.header-navigation-list").empty().append(`<li class="fc-hiw-tata header-navigation-list-item" tabindex="-1">
+          <a class="header-navigation-link primary-link" href="https://getmytata.com/come-funziona/" tabindex="0">Come funziona</a>
+        </li>`)
+    })
+  </script>
+
+
+  <style>
+    /* cart section */
+    .fc-tata .fc-tata-item .cart-title a,
+    .fc-tata .fc-tata-item .cart-item-remove {
+      color: #0063ed;
+    }
+    .fc-tata .select-wrapper.active {
+      border-color: #0063ed;
+    }
+    .fc-tata .fc-invoice-info i.fc-filo {
+      color: #0063ed;
+    }
+    .fc-tata .button.outline {
+      border-radius: 80px;
+      border-color: #0063ed;
+      color: #0063ed;
+    }
+    .fc-tata .button.secondary {
+      border-radius: 80px;
+      background-color: #0063ed;
+      border-color: #0063ed;
+    }
+    .fc-tata .button.secondary:hover {
+      border-color: #0063ed;
+      color: #0063ed;
+    }
+    .fc-tata .button.outline:hover {
+      background-color: #0063ed;
+      border-color: #0063ed;
+      color: #fff;
+    }
+    /* general items */
+    .header-tools ul.header-navigation-list li:not(.fc-hiw-tata) {
+      display: none;
+    }
+    .header-tools ul.header-navigation-list li.fc-hiw-tata a.primary-link {
+      text-transform: none;
+    }
+    .header-cart-count.active {
+      background-color: #0063ed;
+    }
+    .header-actions-list-item:hover {
+      color: #0063ed; 
+    }
+    .footer-wrapper.style-dark.has-borders {
+      background-color: #0063ed;
+      overflow: hidden;
+      font-size: 15px;
+      padding-bottom: 48px;
+    }
+    .footer-wrapper.style-dark.has-borders .main-footer {
+      display: none;
+    }
+    .footer-wrapper.style-dark.has-borders .fc-row {
+      overflow: hidden;
+    }
+    .footer-wrapper.style-dark.has-borders .drawer-social-icons a {
+      vertical-align: middle;
+    }
+    .fc-row .fc-col {
+      width:  50%;
+      display: inline-block;
+      float: left;
+    }
+    .fc-row.fc-hr div {
+      margin: 24px auto;
+      height: 1px;
+      background-color: #fff;
+    }
+    @media screen and (max-width: 576px) {
+     .fc-row .fc-col {
+        width: 100%;
+      } 
+    }
+  </style>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Cart page",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "order_notes",
+      "label": "Enable order notes",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Shipping calculator"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shipping_calculator",
+      "label": "Enable",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "shipping_calculator_default_country",
+      "label": "Default country",
+      "default": "United States"
+    }
+  ]
+}
+{% endschema %}

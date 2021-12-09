@@ -1,0 +1,35 @@
+
+{% comment %}
+<div class="module-wrapper fc-how-it-works">
+  <div class="module page {% if page.content == blank %}no-content{% endif %}">
+    <div class="module-header page-header">
+     {%comment%} <div class="module-title">
+        <h1>{{ page.title }}</h1>
+      </div>
+      {%endcomment%}
+    </div>
+    {% unless page.content == blank %}
+      <div class="module-body page-body rte clearfix">
+        {{ page.content }}
+      </div>
+    {% endunless %}
+  </div>
+</div>
+{% endcomment %}
+
+<style>
+  .fc-about-us .module-header.team-header {
+  	padding-top: 16px;
+  }
+</style>
+<div class="fc-about-us fc-js-trigger">
+  {% section 'about-bg_mob_img' %}
+  
+  <div class="fc-pv-64">
+  	{% section 'module-team' %}
+  </div>
+  
+  {% section 'module-advisor-section' %}
+
+  {% section 'about-image-text' %}
+</div>

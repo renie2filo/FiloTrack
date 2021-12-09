@@ -1,0 +1,48 @@
+<div class="fc-product-filotag-page-wrapper ">
+  {% section 'template-product-filotag' %}
+
+  {% if product.handle == settings.featured-product-main %}
+    {% assign used_product_focus = false %}
+    {% assign used_technical_specifications = false %}
+    {% assign module_1 = settings.product_module_1 %}
+    {% assign module_2 = settings.product_module_2 %}
+
+    {% if module_1 != 'none' %}
+      {% if module_1 == 'module-technical-specifications' %}
+        {% section 'module-technical-specifications' %}
+        {% assign used_technical_specifications = true %}
+      {% endif %}
+
+      {% comment we don't want product focus %} 
+      {% if module_1 == 'module-product-focus' %}
+        {% section 'module-product-focus' %}
+        {% assign used_product_focus = true %}
+      {% endif %}
+      {% endcomment %}
+    {% endif %}
+
+    {% if module_2 != 'none' %}
+      {% comment if we need to do it the proper way, change 'module_2' in settings_schema.json %}
+      {% if module_2 == 'fc-module-technical-specifications' and used_technical_specifications == false %}
+        {% section 'fc-module-technical-specifications' %}
+      {% endif %}
+      {% endcomment %}
+
+      {% if module_2 == 'module-product-focus' and used_product_focus == false %}
+        {% section 'module-product-focus' %}
+      {% endif %}
+    {% endif %}
+  {% endif %}
+
+  {% comment %}
+    {% section 'fc-module-techspec-filotag' %}
+    {% section 'filotag-text-columns' %}
+
+   {% section 'filotag-full-width-video' %}
+
+  {% endcomment %}
+
+  {% section 'products-alternating-content-spec'%}
+
+  {% section 'products-alternating-content-hiw'%}
+</div>

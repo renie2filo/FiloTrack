@@ -1,0 +1,389 @@
+
+{% if section.settings.enable %}
+  {% assign image_size = '' %}
+  {% if section.settings.layout == 'full-width' %}
+    {% assign image_size = '1440x600' %}
+  {% elsif section.settings.layout == 'full-window' %}
+    {% assign image_size = '2048x2048' %}
+  {% endif %}
+  {% assign image_mobile_size = '600x600' %}
+
+  {% if section.settings.custom_class %}
+    {% assign custom_class = section.settings.custom_class %}
+  {% else %}
+    {% assign custom_class = 'fc_def_class' %}
+  {% endif %}
+
+  <div class="fc-how-it-works-top fc-bg-img-block-wrapper {{ custom_class }}" data-section-id="{{ section.id }}">
+
+    <div class="how-it-works-slideshow-loader"></div>
+
+    <div class="">
+        {% assign slide_image = section.settings.image | img_url: image_size %}
+        {% assign mobile_image = section.settings.image_mobile | img_url: image_mobile_size %}
+
+        {% assign has_content = true %}
+        {% assign onboarding = false %}
+        {% if
+          section.settings.title == blank and
+          section.settings.subtitle == blank and
+          section.settings.cta == blank and
+          section.settings.button == blank %}
+          {% assign has_content = false %}
+          {% assign onboarding = true %}
+        {% endif %}
+
+        {%- capture fc_slide_class -%}
+          home-slide 
+          active
+          text-aligned-{{ section.settings.alignment }}
+          overlay
+          overlay-{{ section.settings.overlay_style }}
+          overlay-opacity-{{ section.settings.overlay_opacity }}
+        {%- endcapture %}
+      
+        <style>
+          .{{ custom_class }} .fc-slide-image-container {
+            background-image:url('{{ slide_image }}');
+            background-size: cover;
+            z-index: 1;
+		  }
+          .{{ custom_class }} .fc-slide-image-container .fc-mob-image {
+            display: none;
+          }
+          .{{ custom_class }} .fc.slide-text .button {
+            margin: 48px 0;
+          }
+          .{{ custom_class }} .fc-home-subtitle {
+	        font-weight: 400 !important;
+          }
+          .{{ custom_class }} .slide-text {
+          	top: 30%;
+          }
+          
+          @media screen and (max-width: 768px) {
+            .{{ custom_class }} .fc-slide-image-container {
+              background-image: none;
+              background-color: {{ section.settings.bg_color }};
+              padding-top: 40px;
+            }
+            .{{ custom_class }} .fc-slide-image-container .slide-text.light .fc-slide-text-inner h2,
+            .{{ custom_class }} .fc-slide-image-container .slide-text.light .fc-slide-text-inner h3, 
+            .{{ custom_class }} .fc-slide-image-container .slide-text.light .fc-slide-text-inner p {
+              color: #797676;
+            }
+            .{{ custom_class }} .fc-slide-image-container .fc-mob-image {
+              display: block;
+              width: 100%;
+              margin-top: 24px;
+            }
+            .{{ custom_class }} .fc-slide-text.slide-text {
+              padding: 0;
+            }
+            .{{ custom_class }} .fc-slide-text-inner {
+              padding: 16px 32px;           
+            }
+            .{{ custom_class }} .section-bg-img-wrapper.slides-ready {
+              height: auto !important;
+            }
+            .{{ custom_class }} .home-slide {
+              position: relative;
+            }
+            .{{ custom_class }} .slide-text {
+              transform: translate(0, 0);
+              position: relative;
+              top: 50%;
+              left: 0;
+            }
+            .{{ custom_class }} .fc.slide-text .button {
+            	margin: 24px 0 0 0;
+          	}
+            .{{ custom_class }} .fc-product-feature-list .fc-product-feature {
+              width: 100%;
+            }
+          }
+          
+    </style>
+        <div
+          class="fc-slide-image-container {{ fc_slide_class | strip_newlines }}" 
+          {% if section.settings.slideshow-layout == 'full-window' %}
+            style="background-image: url('{{ slide_image }}');"
+          {% endif %} 
+          data-slide-text="{{ section.settings.text_style }}"
+          >
+
+          {% if section.settings.cta == blank and section.settings.url != blank %}
+            <a class="slide-image-link" href="{{ section.settings.url }}">
+          {% endif %}
+
+          {% if has_content or section.settings.image_mobile %}
+            <div class="fc-slide-text fc slide-text {{ section.settings.text_style }}">
+              
+              {% if has_content %}
+                <div class="fc-slide-text-inner">
+                {% if section.settings.title != blank %}
+                  <h3 class="module-title">{{ section.settings.title }}</h3>
+                {% endif %}
+
+                {% if section.settings.subtitle != blank %}
+                  <h3 class="fc-home-subtitle">{{ section.settings.subtitle }}</h3>
+                {% endif %}
+
+                {% if section.settings.cta != blank and section.settings.url != blank %}
+                  <a class="button outline fc-bordered-button fc-left-button" href="{{ section.settings.url }}">
+                    <span>{{ section.settings.cta | escape }}</span>
+                  </a>
+                {% endif %}               
+                  
+                {% if section.settings.cta2 != blank and section.settings.url2 != blank %}
+                  <a class="button fc-no-outline" href="{{ section.settings.url2 }}">
+                    <span>{{ section.settings.cta2 | escape }}</span>
+                  </a>
+              	{% endif %}  
+                  
+                </div>
+              {% endif %}
+              
+              {% if section.settings.image_mobile %}
+              	<img class="fc-mob-image" src="{{ mobile_image }}">
+              {% endif %}
+              
+            </div>
+          {% endif %}
+              
+          {% if section.settings.cta == blank and section.settings.url != blank %}
+            </a>
+          {% endif %}
+          
+        </div>
+    </div>
+	
+    <script>
+      function {{ custom_class }}_dr(sel) {
+      	var img = document.createElement('img');
+      	img.src = '{{ slide_image }}';
+      	$(sel).css('min-height', $(sel).width()*img.naturalHeight/img.naturalWidth);
+      }
+      $(window).on("load", function() {
+        {{ custom_class }}_dr(".fc-bg-img-block-wrapper.{{ custom_class }}");
+      });
+      $(window).on("resize", function() {
+        {{ custom_class }}_dr(".fc-bg-img-block-wrapper.{{ custom_class }}");
+      });
+    </script>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Backgroung + MobileImage",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable",
+      "label": "Enable",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "custom_class",
+      "label": "Custom Class"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "full-width",
+          "label": "Full width"
+        },
+        {
+          "value": "full-window",
+          "label": "Full window"
+        }
+      ],
+      "default": "full-width",
+      "info": "[Style examples](https:\/\/www.pixelunion.net\/wp-content\/uploads\/2015\/11\/slideshowLayouts.png)"
+    },
+    {
+      "type": "select",
+      "id": "transition",
+      "label": "Transition",
+      "options": [
+        {
+          "value": "transition-slide",
+          "label": "Slide"
+        },
+        {
+          "value": "transition-fade",
+          "label": "Fade"
+        }
+      ],
+      "default": "transition-fade"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Auto rotate between slides",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+        "value": "left",
+        "label": "Left"
+        },
+        {
+        "value": "center",
+        "label": "Center"
+        },
+        {
+        "value": "right",
+        "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "text_style",
+      "label": "Text style",
+      "options": [
+        {
+        "value": "light",
+        "label": "Light"
+        },
+        {
+        "value": "dark",
+        "label": "Dark"
+        }
+      ],
+      "default": "light"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color"
+    },
+  {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Image mobile"
+    },
+    {
+      "type": "select",
+      "id": "overlay_style",
+      "label": "Overlay",
+      "options": [
+        {
+        "value": "none",
+        "label": "None"
+        },
+        {
+        "value": "gradient",
+        "label": "Gradient"
+        },
+        {
+        "value": "primary",
+        "label": "Primary color"
+        },
+        {
+        "value": "secondary",
+        "label": "Secondary color"
+        },
+        {
+        "value": "black",
+        "label": "Black"
+        }
+      ],
+      "default": "gradient"
+    },
+    {
+      "type": "select",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "options": [
+        {
+        "value": "1",
+        "label": "10%"
+        },
+        {
+        "value": "2",
+        "label": "20%"
+        },
+        {
+        "value": "3",
+        "label": "30%"
+        },
+        {
+        "value": "4",
+        "label": "40%"
+        },
+        {
+        "value": "5",
+        "label": "50%"
+        },
+        {
+        "value": "6",
+        "label": "60%"
+        },
+        {
+        "value": "7",
+        "label": "70%"
+        },
+        {
+        "value": "8",
+        "label": "80%"
+        },
+        {
+        "value": "9",
+        "label": "90%"
+        }
+      ],
+      "default": "7"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Slideshow"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subheading",
+      "default": "Introduce customers to your shop with lifestyle imagery and product photography."
+    },
+    {
+      "type": "text",
+      "id": "cta",
+      "label": "Button text"
+    },
+    {
+      "type": "url",
+      "id": "url",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "cta2",
+      "label": "Button text 2"
+    },
+    {
+      "type": "url",
+      "id": "url2",
+      "label": "Link 2"
+    }
+  ]
+}
+
+{% endschema %}
