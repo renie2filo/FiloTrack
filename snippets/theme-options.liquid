@@ -22,7 +22,7 @@
       Theme.currencySwitcher = true;
       {% if settings.currency-switcher-format %}
         Theme.currencySwitcherFormat = '{{ settings.currency-switcher-format }}';
-        Theme.moneyFormat = {{ shop.[settings.currency-switcher-format] | json }};
+        Theme.moneyFormat = {{ shop[settings.currency-switcher-format] | json }};
       {% endif %}
       {% if settings.currency_switcher_default.size > 0 %}
         Theme.defaultCurrency = '{{ settings.currency_switcher_default }}';
@@ -31,3 +31,13 @@
   </script>
 {% endcapture %}
 {{ themeGlobals | strip_newlines }}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{{ shop.[settings.currency-switcher-format] | json }}"
+  to: "{{ shop[settings.currency-switcher-format] | json }}"
+  position: 1057..1109
+{% endcomment %}

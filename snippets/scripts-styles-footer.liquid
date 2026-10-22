@@ -21,7 +21,7 @@
   {{ "jquery.currencies.js" | asset_url | script_tag }}
 {% endif %}
 
-<script src="{{ 'modernizr-2.7.1.min.js'.js' | asset_url }}" async></script>
+<script src="{{ 'modernizr-2.7.1.min.js' | asset_url }}" async></script>
 
 {{ 'plugins.js'  | asset_url | script_tag }}
 <script src="{{ 'fc-site.js' | asset_url }}" async></script>
@@ -565,4 +565,13 @@ testtest --> 265121611
       </p>
   </noscript>
 
-{% endif %}
+{% endif %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{{ 'modernizr-2.7.1.min.js'.js' | asset_url }}"
+  to: "{{ 'modernizr-2.7.1.min.js' | asset_url }}"
+  position: 892..934
+{%- endcomment -%}

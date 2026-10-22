@@ -67,18 +67,7 @@
 
 	Input
 
-{% endcomment %}{% capture _content %}{{ <div><script> console.log("culo"); </script> <script> console.log("ciao");           console.log("xddddddddx");
-
-
-
-
-
-
-
-
-console.log("end"); </script>
-</div>
-}}{% endcapture %}{% comment %}
+{% endcomment %}{% capture _content %}{{ div.script }}{% endcapture %}{% comment %}
 
 	Remove redundant closing tags
 
@@ -99,18 +88,7 @@ console.log("end"); </script>
 	{% assign _scripts = _script_before | split: "</script>" %}
     {% case _scripts.size %}
     {% when 2 %}
-		{% assign _script = _scripts.first |
-
-			replace: "// //", "/*[COMMENT]*/ " |
-			replace: "//	//", "/*[COMMENT]*/ " |
-			replace: "// ", "/*[COMMENT]*/ " |
-			replace: " //", "/*[COMMENT]*/ " |
-			replace: "  	//", "/*[COMMENT]*/ " |
-			replace: "//	", "/*[COMMENT]*/ " |
-			replace: "//<![CDATA[", "/*[COMMENT]*/ " |
-			replace: "//]]>", "/*[COMMENT]*/ " |
-
-		%}
+		{% assign _script = _scripts.first | replace: "// //", "/*[COMMENT]*/ " | replace: "//	//", "/*[COMMENT]*/ " | replace: "// ", "/*[COMMENT]*/ " | replace: " //", "/*[COMMENT]*/ " | replace: "  	//", "/*[COMMENT]*/ " | replace: "//	", "/*[COMMENT]*/ " | replace: "//<![CDATA[", "/*[COMMENT]*/ " | replace: "//]]>", "/*[COMMENT]*/ " %}
 
 		{% assign _script_comment_befores = _script | split: "/*[COMMENT]*/ " %}{% for _script_comment_before in _script_comment_befores %}
 			{% assign _script_comment_content = _script_comment_before | split: nl | first %}
@@ -247,3 +225,37 @@ console.log("end"); </script>
 {% endif %}
 
 
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {{ <div><script> console.log("culo"); </script> <script> console.log("ciao");           console.log("xddddddddx");
+
+
+
+
+
+
+
+
+    console.log("end"); </script>
+    </div>
+    }}
+  to: "{{ div.script }}"
+  position: 2093..2109
+- from: "{% assign _script = _scripts.first |\n\n\t\t\treplace: \"// //\", \"/*[COMMENT]*/
+    \" |\n\t\t\treplace: \"//\t//\", \"/*[COMMENT]*/ \" |\n\t\t\treplace: \"// \",
+    \"/*[COMMENT]*/ \" |\n\t\t\treplace: \" //\", \"/*[COMMENT]*/ \" |\n\t\t\treplace:
+    \"  \t//\", \"/*[COMMENT]*/ \" |\n\t\t\treplace: \"//\t\", \"/*[COMMENT]*/ \"
+    |\n\t\t\treplace: \"//<![CDATA[\", \"/*[COMMENT]*/ \" |\n\t\t\treplace: \"//]]>\",
+    \"/*[COMMENT]*/ \" |\n\n\t\t%}"
+  to: "{% assign _script = _scripts.first | replace: \"// //\", \"/*[COMMENT]*/ \"
+    | replace: \"//\t//\", \"/*[COMMENT]*/ \" | replace: \"// \", \"/*[COMMENT]*/
+    \" | replace: \" //\", \"/*[COMMENT]*/ \" | replace: \"  \t//\", \"/*[COMMENT]*/
+    \" | replace: \"//\t\", \"/*[COMMENT]*/ \" | replace: \"//<![CDATA[\", \"/*[COMMENT]*/
+    \" | replace: \"//]]>\", \"/*[COMMENT]*/ \" %}"
+  position: 3178..3511
+{% endcomment %}

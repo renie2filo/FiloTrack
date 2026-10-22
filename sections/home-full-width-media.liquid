@@ -13,7 +13,7 @@
 {%- endif -%}
 
 {% if section.settings.video_url != blank %}
-  {% assign section.settings.video_url = true %}
+  {% assign renamed_variable_section_2e_settings_2e_video_url = true %}
 {% endif %}
 
 {% if media_layout == 'image-highlight' %}
@@ -261,4 +261,13 @@
     }
   ]
 }
-{% endschema %}
+{% endschema %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% assign section.settings.video_url = true %}"
+  to: "{% assign renamed_variable_section_2e_settings_2e_video_url = true %}"
+  position: 465..534
+{%- endcomment -%}
